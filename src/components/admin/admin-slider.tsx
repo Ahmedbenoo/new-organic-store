@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
 import type { HeroSlide } from "@/lib/types";
 
@@ -27,24 +27,30 @@ export default function AdminSlider() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [toast, setToast] = useState("");
 
-  const refreshSlides = useCallback(async () => {
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/slider?all=true");
-      const payload = (await response.json()) as { slides?: HeroSlide[] };
-
-      if (response.ok) {
-        setSlides(payload.slides ?? []);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    void refreshSlides();
-  }, [refreshSlides]);
+    let cancelled = false;
+
+    async function loadSlides() {
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/slider?all=true");
+        const payload = (await response.json()) as { slides?: HeroSlide[] };
+
+        if (!cancelled && response.ok) {
+          setSlides(payload.slides ?? []);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    void loadSlides();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function showToast(message: string) {
     setToast(message);

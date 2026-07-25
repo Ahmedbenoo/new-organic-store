@@ -41,11 +41,16 @@ export default function ProductSlider() {
 
         if (!cancelled && response.ok && payload.slides?.length) {
           setSlides(payload.slides);
+          setCurrentIndex(0);
         } else if (!cancelled) {
           setSlides(buildFallbackSlides());
+          setCurrentIndex(0);
         }
       } catch {
-        if (!cancelled) setSlides(buildFallbackSlides());
+        if (!cancelled) {
+          setSlides(buildFallbackSlides());
+          setCurrentIndex(0);
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -57,10 +62,6 @@ export default function ProductSlider() {
       cancelled = true;
     };
   }, []);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [slides.length]);
 
   useEffect(() => {
     if (!isAutoPlaying || slides.length === 0) return;
@@ -92,7 +93,9 @@ export default function ProductSlider() {
     );
   }
 
-  const activeSlide = slides[currentIndex];
+  const activeIndex =
+    slides.length === 0 ? 0 : Math.min(currentIndex, slides.length - 1);
+  const activeSlide = slides[activeIndex];
   if (!activeSlide) return null;
 
   const slideLabel = locale === "ar" ? activeSlide.label_ar : activeSlide.label_en;
@@ -129,7 +132,7 @@ export default function ProductSlider() {
             src={activeSlide.image_url}
             alt={slideLabel}
             fill
-            priority={currentIndex === 0}
+            priority={activeIndex === 0}
             className="scale-110 object-cover object-center"
             sizes="(max-width: 768px) 384px, 416px"
           />

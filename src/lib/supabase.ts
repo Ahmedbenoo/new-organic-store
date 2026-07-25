@@ -25,9 +25,8 @@ function normalizeSupabaseUrl(rawUrl?: string) {
 function getSupabaseConfig() {
   const url = normalizeSupabaseUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 
-  return { url, anonKey, serviceRoleKey };
+  return { url, anonKey };
 }
 
 const clientOptions = {
@@ -38,7 +37,6 @@ const clientOptions = {
 } as const;
 
 let browserClient: SupabaseClient | null = null;
-let adminClient: SupabaseClient | null = null;
 
 export function isSupabaseConfigured() {
   const { url, anonKey } = getSupabaseConfig();
@@ -63,26 +61,6 @@ export function getSupabaseBrowserClient() {
   }
 
   return browserClient;
-}
-
-export function createSupabaseAdminClient() {
-  const { url, serviceRoleKey } = getSupabaseConfig();
-
-  if (!url || !serviceRoleKey) {
-    throw new Error(
-      "Supabase admin client is not configured. Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
-    );
-  }
-
-  return createClient(url, serviceRoleKey, clientOptions);
-}
-
-export function getSupabaseAdminClient() {
-  if (!adminClient) {
-    adminClient = createSupabaseAdminClient();
-  }
-
-  return adminClient;
 }
 
 export async function verifySupabaseConnection() {

@@ -1,22 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { products as staticProducts } from "@/data/products";
-import { getProductImage } from "@/lib/product-images";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
 import type { CatalogProduct, StoreCategory } from "@/lib/types";
-
-type MessageCatalog = {
-  Products?: {
-    items?: Record<
-      string,
-      {
-        name?: string;
-        description?: string;
-      }
-    >;
-  };
-};
 
 type ProductRow = {
   id: string;
@@ -36,41 +20,6 @@ type ProductRow = {
   created_at: string;
   updated_at: string;
 };
-
-async function loadMessageCatalog(locale: "ar" | "en") {
-  const file = path.join(process.cwd(), "messages", `${locale}.json`);
-  const raw = await readFile(file, "utf8");
-  return JSON.parse(raw) as MessageCatalog;
-}
-
-async function buildSeedCatalog(): Promise<CatalogProduct[]> {
-  const [arMessages, enMessages] = await Promise.all([
-    loadMessageCatalog("ar"),
-    loadMessageCatalog("en"),
-  ]);
-  const now = new Date().toISOString();
-
-  return staticProducts.map((product, index) => ({
-    id: product.id,
-    name_ar: arMessages.Products?.items?.[product.id]?.name ?? product.id,
-    name_en: enMessages.Products?.items?.[product.id]?.name ?? product.id,
-    description_ar:
-      arMessages.Products?.items?.[product.id]?.description ?? "",
-    description_en:
-      enMessages.Products?.items?.[product.id]?.description ?? "",
-    price: product.price,
-    category: product.category,
-    emoji: product.emoji,
-    unit: product.unit,
-    defaultQuantity: product.defaultQuantity,
-    kind: product.kind,
-    image_url: getProductImage(product.id, product.category),
-    active: true,
-    sort_order: index + 1,
-    created_at: now,
-    updated_at: now,
-  }));
-}
 
 function rowToProduct(row: ProductRow): CatalogProduct {
   return {
@@ -150,34 +99,9 @@ function getClient() {
   return getSupabaseAdminClient();
 }
 
-async function ensureSeedCatalog() {
-  const supabase = getClient();
-  const { count, error: countError } = await supabase
-    .from("products")
-    .select("*", { count: "exact", head: true });
-
-  if (countError) {
-    throw new Error(`Failed to check products table: ${countError.message}`);
-  }
-
-  if ((count ?? 0) > 0) {
-    return;
-  }
-
-  const seed = await buildSeedCatalog();
-  const rows = seed.map((product) => productToRow(product));
-  const { error: insertError } = await supabase.from("products").insert(rows);
-
-  if (insertError) {
-    throw new Error(`Failed to seed products: ${insertError.message}`);
-  }
-}
-
 export async function readProducts(options?: {
   activeOnly?: boolean;
 }): Promise<CatalogProduct[]> {
-  await ensureSeedCatalog();
-
   let query = getClient()
     .from("products")
     .select("*")

@@ -1,6 +1,4 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
 import type {
   BlogData,
   BlogPageSettings,
@@ -8,7 +6,6 @@ import type {
 } from "@/lib/types";
 
 const BLOG_SETTINGS_ID = 1;
-const legacyBlogFile = path.join(process.cwd(), "data", "blog.json");
 
 type BlogPageSettingsRow = BlogPageSettings & {
   id: number;
@@ -90,15 +87,6 @@ function rowToSettings(row: BlogPageSettingsRow): BlogPageSettings {
   };
 }
 
-async function loadLegacyJsonBlog() {
-  try {
-    const raw = await readFile(legacyBlogFile, "utf8");
-    return JSON.parse(raw) as BlogData;
-  } catch {
-    return null;
-  }
-}
-
 async function readSettingsRow() {
   const { data, error } = await getClient()
     .from("blog_page_settings")
@@ -132,56 +120,6 @@ async function readPostsRows(options?: { activeOnly?: boolean }) {
   return ((data ?? []) as BlogPostRow[]).map(rowToPost);
 }
 
-async function ensureSeedBlog() {
-  const supabase = getClient();
-  const [{ count: postsCount, error: postsError }, settingsRow] =
-    await Promise.all([
-      supabase
-        .from("blog_posts")
-        .select("*", { count: "exact", head: true }),
-      readSettingsRow(),
-    ]);
-
-  if (postsError) {
-    throw new Error(`Failed to check blog_posts table: ${postsError.message}`);
-  }
-
-  if ((postsCount ?? 0) > 0 && settingsRow) {
-    return;
-  }
-
-  const legacy = await loadLegacyJsonBlog();
-  if (!legacy) {
-    return;
-  }
-
-  if (!settingsRow && legacy.settings) {
-    const now = new Date().toISOString();
-    const { error: settingsError } = await supabase
-      .from("blog_page_settings")
-      .insert({
-        id: BLOG_SETTINGS_ID,
-        ...legacy.settings,
-        updated_at: now,
-      });
-
-    if (settingsError) {
-      throw new Error(`Failed to seed blog settings: ${settingsError.message}`);
-    }
-  }
-
-  if ((postsCount ?? 0) === 0 && legacy.posts?.length) {
-    const rows = sortPosts(legacy.posts).map((post) => postToRow(post));
-    const { error: postsInsertError } = await supabase
-      .from("blog_posts")
-      .upsert(rows, { onConflict: "id", ignoreDuplicates: true });
-
-    if (postsInsertError) {
-      throw new Error(`Failed to seed blog posts: ${postsInsertError.message}`);
-    }
-  }
-}
-
 async function readSettings(): Promise<BlogPageSettings> {
   const row = await readSettingsRow();
   if (row) {
@@ -197,8 +135,6 @@ async function readSettings(): Promise<BlogPageSettings> {
 }
 
 export async function readBlogData(options?: { activeOnly?: boolean }) {
-  await ensureSeedBlog();
-
   const [settings, posts] = await Promise.all([
     readSettings(),
     readPostsRows(options),
@@ -211,8 +147,6 @@ export async function readBlogData(options?: { activeOnly?: boolean }) {
 }
 
 export async function readBlogPostBySlug(slug: string) {
-  await ensureSeedBlog();
-
   const { data, error } = await getClient()
     .from("blog_posts")
     .select("*")

@@ -1,0 +1,337 @@
+[
+  {
+    "id": "clover-blossom",
+    "price": 210,
+    "category": "natural-honey",
+    "emoji": "🌼",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/optimized/img1.jpg",
+    "sort_order": 1
+  },
+  {
+    "id": "citrus-blossom",
+    "price": 250,
+    "category": "natural-honey",
+    "emoji": "🍊",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/optimized/img10.jpg",
+    "sort_order": 2
+  },
+  {
+    "id": "black-seed-honey",
+    "price": 260,
+    "category": "natural-honey",
+    "emoji": "🌿",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/optimized/img3.jpg",
+    "sort_order": 3
+  },
+  {
+    "id": "sage-honey",
+    "price": 260,
+    "category": "natural-honey",
+    "emoji": "🍃",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/optimized/img8.jpg",
+    "sort_order": 4
+  },
+  {
+    "id": "wild-herbs-honey",
+    "price": 250,
+    "category": "natural-honey",
+    "emoji": "🌾",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/optimized/img7.jpg",
+    "sort_order": 5
+  },
+  {
+    "id": "nuts-honey",
+    "price": 200,
+    "category": "natural-honey",
+    "emoji": "🥜",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img4.jpeg",
+    "sort_order": 6
+  },
+  {
+    "id": "citrus-wax",
+    "price": 275,
+    "category": "natural-honey",
+    "emoji": "🍯",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img7.jpeg",
+    "sort_order": 7
+  },
+  {
+    "id": "clover-wax",
+    "price": 250,
+    "category": "natural-honey",
+    "emoji": "🐝",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img6.jpeg",
+    "sort_order": 8
+  },
+  {
+    "id": "fennel-honey",
+    "price": 280,
+    "category": "natural-honey",
+    "emoji": "🌱",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img16.jpeg",
+    "sort_order": 9
+  },
+  {
+    "id": "acacia-sunt",
+    "price": 270,
+    "category": "natural-honey",
+    "emoji": "🌳",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img16.jpeg",
+    "sort_order": 10
+  },
+  {
+    "id": "anise-honey",
+    "price": 270,
+    "category": "natural-honey",
+    "emoji": "⭐",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img16.jpeg",
+    "sort_order": 11
+  },
+  {
+    "id": "sidr-egyptian",
+    "price": 880,
+    "category": "sidr",
+    "emoji": "🏔️",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img20.jpeg",
+    "sort_order": 12
+  },
+  {
+    "id": "sidr-kashmiri",
+    "price": 1570,
+    "category": "sidr",
+    "emoji": "🌄",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img10.jpeg",
+    "sort_order": 13
+  },
+  {
+    "id": "sidr-hadhrami",
+    "price": 1890,
+    "category": "sidr",
+    "emoji": "🕌",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img20.jpeg",
+    "sort_order": 14
+  },
+  {
+    "id": "sidr-saudi",
+    "price": 1680,
+    "category": "sidr",
+    "emoji": "🇸🇦",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img12.jpeg",
+    "sort_order": 15
+  },
+  {
+    "id": "white-russian",
+    "price": 1999,
+    "category": "sidr",
+    "emoji": "❄️",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img3.jpeg",
+    "sort_order": 16
+  },
+  {
+    "id": "royal-jelly",
+    "price": 20,
+    "category": "bee-products",
+    "emoji": "👑",
+    "unit": "perGram",
+    "kind": "standard",
+    "defaultQuantity": 50,
+    "image_url": "/assets/img12.jpeg",
+    "sort_order": 17
+  },
+  {
+    "id": "bee-pollen",
+    "price": 5,
+    "category": "bee-products",
+    "emoji": "🌻",
+    "unit": "perGram",
+    "kind": "standard",
+    "defaultQuantity": 100,
+    "image_url": "/assets/img12.jpeg",
+    "sort_order": 18
+  },
+  {
+    "id": "palm-pollen",
+    "price": 5,
+    "category": "bee-products",
+    "emoji": "🌴",
+    "unit": "perGram",
+    "kind": "standard",
+    "defaultQuantity": 100,
+    "image_url": "/assets/img20.jpeg",
+    "sort_order": 19
+  },
+  {
+    "id": "red-ginseng",
+    "price": 8,
+    "category": "bee-products",
+    "emoji": "🫚",
+    "unit": "perGram",
+    "kind": "standard",
+    "defaultQuantity": 50,
+    "image_url": "/assets/img19.jpeg",
+    "sort_order": 20
+  },
+  {
+    "id": "propolis",
+    "price": 10,
+    "category": "bee-products",
+    "emoji": "💛",
+    "unit": "perGram",
+    "kind": "standard",
+    "defaultQuantity": 50,
+    "image_url": "/assets/img19.jpeg",
+    "sort_order": 21
+  },
+  {
+    "id": "ginseng-honey",
+    "price": 870,
+    "category": "mixed-honey",
+    "emoji": "🍯",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img19.jpeg",
+    "sort_order": 22
+  },
+  {
+    "id": "royal-honey-blend",
+    "price": 1880,
+    "category": "mixed-honey",
+    "emoji": "✨",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img15.jpeg",
+    "sort_order": 23
+  },
+  {
+    "id": "propolis-honey",
+    "price": 890,
+    "category": "mixed-honey",
+    "emoji": "🛡️",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img19.jpeg",
+    "sort_order": 24
+  },
+  {
+    "id": "squeeze-honey",
+    "price": 250,
+    "category": "mixed-honey",
+    "emoji": "🧴",
+    "unit": "fixed",
+    "kind": "standard",
+    "image_url": "/assets/img15.jpeg",
+    "sort_order": 25
+  },
+  {
+    "id": "custom-formulation",
+    "price": 0,
+    "category": "formulations",
+    "emoji": "⚗️",
+    "unit": "fixed",
+    "kind": "custom",
+    "image_url": "/assets/img17.jpeg",
+    "sort_order": 26
+  },
+  {
+    "id": "vip-formulation",
+    "price": 0,
+    "category": "vip-formulations",
+    "emoji": "💎",
+    "unit": "fixed",
+    "kind": "custom",
+    "image_url": "/assets/img22.jpeg",
+    "sort_order": 27
+  },
+  {
+    "id": "rural-products",
+    "price": 0,
+    "category": "natural-oils",
+    "emoji": "🫒",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img18.jpeg",
+    "sort_order": 28
+  },
+  {
+    "id": "madinah-dates",
+    "price": 0,
+    "category": "dates",
+    "emoji": "🌴",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img14.jpeg",
+    "sort_order": 29
+  },
+  {
+    "id": "qassim-dates",
+    "price": 0,
+    "category": "dates",
+    "emoji": "🌴",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img14.jpeg",
+    "sort_order": 30
+  },
+  {
+    "id": "majdoul-dates",
+    "price": 0,
+    "category": "dates",
+    "emoji": "🌴",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img14.jpeg",
+    "sort_order": 31
+  },
+  {
+    "id": "ajwa-dates",
+    "price": 0,
+    "category": "dates",
+    "emoji": "🌴",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img14.jpeg",
+    "sort_order": 32
+  },
+  {
+    "id": "sukkari-dates",
+    "price": 0,
+    "category": "dates",
+    "emoji": "🌴",
+    "unit": "fixed",
+    "kind": "announcement",
+    "image_url": "/assets/img14.jpeg",
+    "sort_order": 33
+  }
+]

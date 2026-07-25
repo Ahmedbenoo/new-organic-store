@@ -4,7 +4,6 @@
  */
 import { readFileSync, renameSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { randomUUID } from "node:crypto";
 
 function loadEnvFile(filePath) {
   try {

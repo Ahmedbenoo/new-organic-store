@@ -59,7 +59,7 @@ const SETTING_LABELS: Record<string, string> = {
   footer_phone: "Footer Phone",
   footer_address_en: "Footer Address (English)",
   footer_address_ar: "Footer Address (Arabic)",
-  admin_password: "Admin Dashboard Password",
+  admin_password: "New Admin Password (leave blank to keep current)",
 };
 
 export default function AdminSettings() {
@@ -102,10 +102,15 @@ export default function AdminSettings() {
     setSaving(true);
 
     try {
+      const payload = { ...settings };
+      if (!payload.admin_password?.trim()) {
+        delete payload.admin_password;
+      }
+
       const response = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -113,6 +118,11 @@ export default function AdminSettings() {
         return;
       }
 
+      setSettings((prev) => {
+        const next = { ...prev };
+        delete next.admin_password;
+        return next;
+      });
       showToast("Settings saved!");
     } catch {
       showToast("Error saving settings");
@@ -184,6 +194,14 @@ export default function AdminSettings() {
                         type={key === "admin_password" ? "password" : "text"}
                         dir={isArabic ? "rtl" : "ltr"}
                         value={settings[key] ?? ""}
+                        placeholder={
+                          key === "admin_password"
+                            ? "Leave blank to keep current password"
+                            : undefined
+                        }
+                        autoComplete={
+                          key === "admin_password" ? "new-password" : undefined
+                        }
                         onChange={(event) =>
                           setSettings((prev) => ({
                             ...prev,

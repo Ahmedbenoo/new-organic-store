@@ -1,10 +1,7 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
 import type { AboutPageContent } from "@/lib/types";
 
 const ABOUT_PAGE_ID = 1;
-const legacyAboutFile = path.join(process.cwd(), "data", "about-page.json");
 
 type AboutPageRow = {
   id: number;
@@ -12,55 +9,60 @@ type AboutPageRow = {
   updated_at: string;
 };
 
+const EMPTY_ABOUT_CONTENT: AboutPageContent = {
+  title_ar: "",
+  title_en: "",
+  description_ar: "",
+  description_en: "",
+  story_title_ar: "",
+  story_title_en: "",
+  story_p1_ar: "",
+  story_p1_en: "",
+  story_p2_ar: "",
+  story_p2_en: "",
+  story_image_url: "/assets/img3.jpeg",
+  story_emoji: "🐝",
+  values_title_ar: "",
+  values_title_en: "",
+  value1_icon: "🍯",
+  value1_title_ar: "",
+  value1_title_en: "",
+  value1_text_ar: "",
+  value1_text_en: "",
+  value2_icon: "🤝",
+  value2_title_ar: "",
+  value2_title_en: "",
+  value2_text_ar: "",
+  value2_text_en: "",
+  value3_icon: "🌍",
+  value3_title_ar: "",
+  value3_title_en: "",
+  value3_text_ar: "",
+  value3_text_en: "",
+  value4_icon: "✅",
+  value4_title_ar: "",
+  value4_title_en: "",
+  value4_text_ar: "",
+  value4_text_en: "",
+  process_title_ar: "",
+  process_title_en: "",
+  step1_title_ar: "",
+  step1_title_en: "",
+  step1_text_ar: "",
+  step1_text_en: "",
+  step2_title_ar: "",
+  step2_title_en: "",
+  step2_text_ar: "",
+  step2_text_en: "",
+  step3_title_ar: "",
+  step3_title_en: "",
+  step3_text_ar: "",
+  step3_text_en: "",
+  updated_at: "",
+};
+
 function getClient() {
   return getSupabaseAdminClient();
-}
-
-async function loadLegacyJsonAbout() {
-  try {
-    const raw = await readFile(legacyAboutFile, "utf8");
-    return JSON.parse(raw) as AboutPageContent;
-  } catch {
-    return null;
-  }
-}
-
-async function ensureSeedAbout() {
-  const supabase = getClient();
-  const { data, error } = await supabase
-    .from("about_page")
-    .select("id")
-    .eq("id", ABOUT_PAGE_ID)
-    .maybeSingle();
-
-  if (error) {
-    throw new Error(`Failed to check about_page table: ${error.message}`);
-  }
-
-  if (data) {
-    return;
-  }
-
-  const legacy = await loadLegacyJsonAbout();
-  if (!legacy) {
-    return;
-  }
-
-  const now = new Date().toISOString();
-  const content: AboutPageContent = {
-    ...legacy,
-    updated_at: legacy.updated_at ?? now,
-  };
-
-  const { error: insertError } = await supabase.from("about_page").insert({
-    id: ABOUT_PAGE_ID,
-    content,
-    updated_at: content.updated_at,
-  });
-
-  if (insertError) {
-    throw new Error(`Failed to seed about page: ${insertError.message}`);
-  }
 }
 
 function rowToContent(row: AboutPageRow): AboutPageContent {
@@ -71,8 +73,6 @@ function rowToContent(row: AboutPageRow): AboutPageContent {
 }
 
 export async function readAboutContent() {
-  await ensureSeedAbout();
-
   const { data, error } = await getClient()
     .from("about_page")
     .select("id, content, updated_at")
@@ -84,12 +84,7 @@ export async function readAboutContent() {
   }
 
   if (!data) {
-    const legacy = await loadLegacyJsonAbout();
-    if (legacy) {
-      return legacy;
-    }
-
-    throw new Error("About page content is not available.");
+    return EMPTY_ABOUT_CONTENT;
   }
 
   return rowToContent(data as AboutPageRow);

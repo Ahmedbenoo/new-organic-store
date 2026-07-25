@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
 import type { BlogData, BlogPageSettings, BlogPostRecord } from "@/lib/types";
 
@@ -36,25 +36,31 @@ export default function AdminBlog() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [toast, setToast] = useState("");
 
-  const refreshBlog = useCallback(async () => {
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/blog?all=true");
-      const payload = (await response.json()) as BlogData;
-
-      if (response.ok) {
-        setSettings(payload.settings);
-        setPosts(payload.posts ?? []);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    void refreshBlog();
-  }, [refreshBlog]);
+    let cancelled = false;
+
+    async function loadBlog() {
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/blog?all=true");
+        const payload = (await response.json()) as BlogData;
+
+        if (!cancelled && response.ok) {
+          setSettings(payload.settings);
+          setPosts(payload.posts ?? []);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    void loadBlog();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function showToast(message: string) {
     setToast(message);

@@ -1,10 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
 import type { HeroSlide } from "@/lib/types";
-
-const legacySliderFile = path.join(process.cwd(), "data", "hero-slider.json");
 
 type HeroSlideRow = {
   id: string;
@@ -54,48 +50,7 @@ function slideToRow(slide: HeroSlide): HeroSlideRow {
   };
 }
 
-async function loadLegacyJsonSlides() {
-  try {
-    const raw = await readFile(legacySliderFile, "utf8");
-    const parsed = JSON.parse(raw) as HeroSlide[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-async function ensureSeedSlides() {
-  const supabase = getClient();
-  const { count, error: countError } = await supabase
-    .from("hero_slides")
-    .select("*", { count: "exact", head: true });
-
-  if (countError) {
-    throw new Error(`Failed to check hero_slides table: ${countError.message}`);
-  }
-
-  if ((count ?? 0) > 0) {
-    return;
-  }
-
-  const legacy = await loadLegacyJsonSlides();
-  if (legacy.length === 0) {
-    return;
-  }
-
-  const rows = sortSlides(legacy).map((slide) => slideToRow(slide));
-  const { error: insertError } = await supabase
-    .from("hero_slides")
-    .upsert(rows, { onConflict: "id", ignoreDuplicates: true });
-
-  if (insertError) {
-    throw new Error(`Failed to seed hero slides: ${insertError.message}`);
-  }
-}
-
 export async function readSlides(options?: { activeOnly?: boolean }) {
-  await ensureSeedSlides();
-
   let query = getClient()
     .from("hero_slides")
     .select("*")

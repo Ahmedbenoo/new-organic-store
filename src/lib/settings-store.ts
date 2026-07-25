@@ -1,9 +1,14 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import "server-only";
+
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
+import {
+  hashPassword,
+  isBcryptHash,
+  verifyPassword,
+} from "@/lib/password-hash";
 import type { SiteSettings } from "@/lib/types";
 
-const legacySettingsFile = path.join(process.cwd(), "data", "site-settings.json");
+export const ADMIN_PASSWORD_KEY = "admin_password";
 
 export const PUBLIC_SETTING_KEYS = [
   "whatsapp_owner",
@@ -35,7 +40,6 @@ const DEFAULT_SETTINGS: SiteSettings = {
     "Discover raw honey, wildflower varieties, and small-batch blends from apiaries we know and trust.",
   hero_description_ar:
     "اكتشف العسل الخام وأصناف الزهور البرية والخلطات الصغيرة من مناحل نعرفها ونثق بها.",
-  admin_password: "admin123",
 };
 
 type SettingRow = {
@@ -51,7 +55,7 @@ function getClient() {
 
 function getSettingCategory(key: string) {
   if (key.startsWith("whatsapp_")) return "contact";
-  if (key === "admin_password") return "admin";
+  if (key === ADMIN_PASSWORD_KEY) return "admin";
   if (key.startsWith("hero_")) return "hero";
   if (key.startsWith("footer_")) return "footer";
   return "general";
@@ -78,42 +82,13 @@ function rowsToSettings(rows: SettingRow[]): SiteSettings {
   return settings;
 }
 
-async function loadLegacyJsonSettings() {
-  try {
-    const raw = await readFile(legacySettingsFile, "utf8");
-    return JSON.parse(raw) as SiteSettings;
-  } catch {
-    return null;
-  }
-}
-
-async function ensureSeedSettings() {
-  const supabase = getClient();
-  const { count, error: countError } = await supabase
-    .from("site_settings")
-    .select("*", { count: "exact", head: true });
-
-  if (countError) {
-    throw new Error(`Failed to check site_settings table: ${countError.message}`);
-  }
-
-  if ((count ?? 0) > 0) {
-    return;
-  }
-
-  const legacy = await loadLegacyJsonSettings();
-  const seed = { ...DEFAULT_SETTINGS, ...legacy };
-  const rows = settingsToRows(seed);
-  const { error: insertError } = await supabase.from("site_settings").insert(rows);
-
-  if (insertError) {
-    throw new Error(`Failed to seed site settings: ${insertError.message}`);
-  }
+function stripAdminPassword(settings: SiteSettings): SiteSettings {
+  const { [ADMIN_PASSWORD_KEY]: _removed, ...safeSettings } = settings;
+  void _removed;
+  return safeSettings;
 }
 
 export async function readSettings(): Promise<SiteSettings> {
-  await ensureSeedSettings();
-
   const { data, error } = await getClient().from("site_settings").select("key, value");
 
   if (error) {
@@ -121,6 +96,11 @@ export async function readSettings(): Promise<SiteSettings> {
   }
 
   return rowsToSettings((data ?? []) as SettingRow[]);
+}
+
+export async function readAdminSettings(): Promise<SiteSettings> {
+  const settings = await readSettings();
+  return stripAdminPassword(settings);
 }
 
 export async function readPublicSettings() {
@@ -136,10 +116,25 @@ export async function readPublicSettings() {
 
 export async function updateSettings(partial: SiteSettings) {
   const current = await readSettings();
-  const next = { ...current, ...partial };
+  const next: SiteSettings = { ...current };
+
+  for (const [key, value] of Object.entries(partial)) {
+    if (key === ADMIN_PASSWORD_KEY) {
+      const plainPassword = value?.trim() ?? "";
+      if (!plainPassword) {
+        continue;
+      }
+
+      next[ADMIN_PASSWORD_KEY] = await hashPassword(plainPassword);
+      continue;
+    }
+
+    next[key] = value ?? "";
+  }
+
   const rows = settingsToRows(
     Object.fromEntries(
-      Object.entries(partial).map(([key, value]) => [key, next[key] ?? value ?? ""]),
+      Object.keys(partial).map((key) => [key, next[key] ?? ""]),
     ),
   );
 
@@ -151,12 +146,27 @@ export async function updateSettings(partial: SiteSettings) {
     throw new Error(`Failed to update settings: ${error.message}`);
   }
 
-  return next;
+  return stripAdminPassword(next);
 }
 
-export async function getAdminPassword() {
+export async function getAdminPasswordHash(): Promise<string | null> {
   const settings = await readSettings();
-  return settings.admin_password ?? DEFAULT_SETTINGS.admin_password ?? "admin123";
+  const hash = settings[ADMIN_PASSWORD_KEY];
+
+  if (!hash || !isBcryptHash(hash)) {
+    return null;
+  }
+
+  return hash;
+}
+
+export async function verifyAdminPassword(plain: string): Promise<boolean> {
+  const hash = await getAdminPasswordHash();
+  if (!hash) {
+    return false;
+  }
+
+  return verifyPassword(plain, hash);
 }
 
 export async function getWhatsAppNumbers() {

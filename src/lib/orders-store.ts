@@ -1,11 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabaseAdminClient } from "@/lib/supabase-admin";
 import { phonesMatch } from "@/lib/phone";
 import type { Order, OrderItem } from "@/lib/types";
-
-const legacyOrdersFile = path.join(process.cwd(), "data", "orders.json");
 
 type OrderRow = {
   id: string;
@@ -54,48 +50,7 @@ function orderToRow(order: Order): OrderRow {
   };
 }
 
-async function loadLegacyJsonOrders() {
-  try {
-    const raw = await readFile(legacyOrdersFile, "utf8");
-    const parsed = JSON.parse(raw) as Order[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-async function ensureSeedOrders() {
-  const supabase = getClient();
-  const { count, error: countError } = await supabase
-    .from("orders")
-    .select("*", { count: "exact", head: true });
-
-  if (countError) {
-    throw new Error(`Failed to check orders table: ${countError.message}`);
-  }
-
-  if ((count ?? 0) > 0) {
-    return;
-  }
-
-  const legacy = await loadLegacyJsonOrders();
-  if (legacy.length === 0) {
-    return;
-  }
-
-  const rows = legacy.map((order) => orderToRow(order));
-  const { error: insertError } = await supabase
-    .from("orders")
-    .upsert(rows, { onConflict: "id", ignoreDuplicates: true });
-
-  if (insertError) {
-    throw new Error(`Failed to seed orders: ${insertError.message}`);
-  }
-}
-
 export async function readOrders(): Promise<Order[]> {
-  await ensureSeedOrders();
-
   const { data, error } = await getClient()
     .from("orders")
     .select("*")
@@ -169,8 +124,6 @@ export async function findOrdersByPhone(phone: string): Promise<Order[]> {
 
 export async function findOrdersByIds(ids: string[]): Promise<Order[]> {
   if (ids.length === 0) return [];
-
-  await ensureSeedOrders();
 
   const { data, error } = await getClient()
     .from("orders")
