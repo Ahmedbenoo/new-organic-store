@@ -1,0 +1,68 @@
+[
+  {
+    "id": "42ea6fd6-2b8f-44ea-827d-ce300bf581d4",
+    "image_url": "/assets/image2.png",
+    "label_en": "Citrus Blossom Honey",
+    "label_ar": "عسل زهور الموالح",
+    "product_id": "citrus-blossom",
+    "active": true,
+    "sort_order": 1,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  },
+  {
+    "id": "e7b4d3a6-37f1-4540-8d9c-53b31773ebad",
+    "image_url": "/assets/pexels-rahimegul-25745495.jpg",
+    "label_en": "Sage Honey",
+    "label_ar": "عسل البردقوش",
+    "product_id": "sage-honey",
+    "active": true,
+    "sort_order": 2,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  },
+  {
+    "id": "5262867c-dc43-46f8-b08c-e48bb8b1c40e",
+    "image_url": "/optimized/img7.jpg",
+    "label_en": "Black Seed Honey",
+    "label_ar": "عسل حبة البركة",
+    "product_id": "black-seed-honey",
+    "active": true,
+    "sort_order": 3,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  },
+  {
+    "id": "5883d273-cee6-48e7-8183-323832291cea",
+    "image_url": "/assets/pexels-ai25studioai-5589055.jpg",
+    "label_en": "Clover Blossom Honey",
+    "label_ar": "عسل نوارة برسيم",
+    "product_id": "clover-blossom",
+    "active": true,
+    "sort_order": 4,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  },
+  {
+    "id": "0c6d47c9-0afe-4486-9f6a-f3e27dd1e2a5",
+    "image_url": "/optimized/img6.jpg",
+    "label_en": "Wild Herbs Honey",
+    "label_ar": "عسل الأعشاب البرية",
+    "product_id": "wild-herbs-honey",
+    "active": true,
+    "sort_order": 5,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  },
+  {
+    "id": "13db8d98-8088-4545-81ee-7f3c7dc28d96",
+    "image_url": "/assets/image1.jpg",
+    "label_en": "Honey with Nuts",
+    "label_ar": "عسل بالمكسرات",
+    "product_id": "nuts-honey",
+    "active": true,
+    "sort_order": 6,
+    "created_at": "2026-07-18T12:44:34.592Z",
+    "updated_at": "2026-07-21T04:25:14.466Z"
+  }
+]

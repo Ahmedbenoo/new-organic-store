@@ -1,0 +1,420 @@
+{
+  "Metadata": {
+    "title": "Organic Store | Pure Organic Honey",
+    "description": "Premium organic honey sourced from local apiaries. Shop raw honey, comb honey, and artisanal blends."
+  },
+  "Navigation": {
+    "home": "Home",
+    "shop": "Shop",
+    "orders": "My Orders",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "brandName": "Organic Store",
+    "brandTagline": "Pure organic honey",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mobileMenu": "Mobile menu",
+    "search": "Search",
+    "cart": "Cart",
+    "cta": "Shop Now"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "Common": {
+    "currency": "EGP",
+    "addToCart": "Add to Cart",
+    "readMore": "Read more",
+    "minRead": "{minutes} min read"
+  },
+  "Search": {
+    "title": "Search products",
+    "placeholder": "Search honey products...",
+    "hint": "Type to search our honey collection",
+    "noResults": "No products found",
+    "close": "Close"
+  },
+  "Cart": {
+    "title": "Your Cart",
+    "close": "Close cart",
+    "empty": "Your cart is empty",
+    "emptyHint": "Browse our shop and add your favorite honey.",
+    "itemsCount": "{count, plural, =0 {No items} =1 {1 item} other {# items}}",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "clear": "Clear cart",
+    "remove": "Remove item"
+  },
+  "Checkout": {
+    "title": "Complete Your Order",
+    "close": "Close",
+    "orderSummary": "Order Summary ({count, plural, =1 {1 item} other {# items}})",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "phone": "Phone Number",
+    "phonePlaceholder": "e.g. 01012345678",
+    "address": "Delivery Address",
+    "addressPlaceholder": "Street, area, city...",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "Any special instructions...",
+    "whatsappHint": "After placing the order, WhatsApp will open automatically with your order details for confirmation.",
+    "submit": "Place Order via WhatsApp",
+    "submitting": "Placing Order...",
+    "successTitle": "Order Placed!",
+    "successMessage": "Thank you! Your order has been received. WhatsApp has opened to confirm your order — please send the message to complete your purchase.",
+    "whatsappTitle": "New Order - Organic Store",
+    "whatsappCustomer": "Customer",
+    "whatsappPhone": "Phone",
+    "whatsappAddress": "Address",
+    "whatsappNotes": "Notes",
+    "whatsappItems": "Order Items",
+    "whatsappTotal": "Total",
+    "openWhatsApp": "Open WhatsApp and send order",
+    "orderSaveError": "Could not save the order. Please try again or contact us on WhatsApp directly.",
+    "orderNumber": "Order Number",
+    "orderStatus": "Order Status",
+    "viewMyOrders": "View My Orders",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "Orders": {
+    "title": "My Orders",
+    "description": "Track your current and past orders using your phone number.",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "e.g. 01012345678",
+    "phoneHint": "Enter the same phone number you used when placing your order to see all saved orders.",
+    "search": "Show Orders",
+    "searching": "Searching...",
+    "refresh": "Refresh",
+    "loading": "Loading orders...",
+    "loadError": "Could not load orders. Please try again.",
+    "phoneRequired": "Please enter your phone number.",
+    "emptyTitle": "No orders found",
+    "emptyDescription": "We couldn't find orders for this number. Try the phone number you used when ordering.",
+    "shopNow": "Shop Now",
+    "resultsCount": "{count, plural, =1 {1 order} other {# orders}}",
+    "orderNumber": "Order #{number}",
+    "itemsCount": "{count, plural, =1 {item} other {items}}",
+    "customer": "Customer",
+    "phone": "Phone",
+    "address": "Address",
+    "notes": "Notes",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "Footer": {
+    "description": "We bring you pure, traceable honey from trusted local beekeepers — harvested with care and delivered fresh to your table.",
+    "quickLinks": "Quick Links",
+    "contactTitle": "Get in Touch",
+    "email": "hello@organic-store.com",
+    "phone": "+20 1092313486",
+    "address": "Cairo, Egypt",
+    "rights": "All rights reserved."
+  },
+  "Home": {
+    "badge": "100% Organic",
+    "title": "Nature's sweetest gift, bottled with care.",
+    "description": "Discover raw honey, wildflower varieties, and small-batch blends from apiaries we know and trust.",
+    "ctaPrimary": "Shop Honey",
+    "ctaSecondary": "Our Story",
+    "stat1Value": "50+",
+    "stat1Label": "Local Apiaries",
+    "stat2Value": "100%",
+    "stat2Label": "Pure & Raw",
+    "stat3Value": "4.9★",
+    "stat3Label": "Customer Rating",
+    "heroCardTitle": "Raw Wildflower Honey",
+    "heroCardSubtitle": "Harvested at peak season",
+    "featuresTitle": "Why Organic Store?",
+    "featuresSubtitle": "Every jar tells a story of quality, traceability, and care.",
+    "feature1Icon": "🌿",
+    "feature1Title": "100% Organic",
+    "feature1Text": "Certified organic honey with no additives, preservatives, or processing.",
+    "feature2Icon": "🏔️",
+    "feature2Title": "Single Origin",
+    "feature2Text": "Each variety comes from a specific region and season for unique flavor.",
+    "feature3Icon": "🚚",
+    "feature3Title": "Fast Delivery",
+    "feature3Text": "Fresh from the hive to your doorstep within 48 hours.",
+    "feature4Icon": "🔬",
+    "feature4Title": "Lab Tested",
+    "feature4Text": "Every batch is tested for purity, moisture, and authenticity.",
+    "productsTitle": "Best Sellers",
+    "productsSubtitle": "Our most loved honey varieties, chosen by customers.",
+    "viewAll": "View All Products",
+    "testimonialsTitle": "What Our Customers Say",
+    "review1Text": "The Sidr honey is unlike anything I've tasted. Rich, smooth, and absolutely authentic.",
+    "review1Author": "Fatima A.",
+    "review2Text": "Fast delivery and beautiful packaging. My family loves the wildflower honey on breakfast.",
+    "review2Author": "Omar K.",
+    "review3Text": "Finally found a store I can trust for pure, unprocessed honey. Highly recommended.",
+    "review3Author": "Sarah M.",
+    "bannerTitle": "Ready to taste the difference?",
+    "bannerText": "Explore our full collection of premium organic honey and find your perfect jar.",
+    "bannerCta": "Browse Collection"
+  },
+  "Shop": {
+    "title": "Shop",
+    "description": "Browse natural honey, Sidr, bee products, custom blends, and dates.",
+    "filters": {
+      "all": "All",
+      "natural-honey": "Natural Honey",
+      "sidr": "Sidr Honey",
+      "bee-products": "Bee Products",
+      "mixed-honey": "Mixed Honey",
+      "formulations": "Blends",
+      "vip-formulations": "VIP Blends",
+      "natural-oils": "Natural Oils",
+      "dates": "Dates"
+    },
+    "paginationLabel": "Shop pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "loading": "Loading products...",
+    "emptyCategory": "No products in this category yet.",
+    "showingResults": "Showing {from}–{to} of {total} products — page {page} of {pages}"
+  },
+  "Products": {
+    "comingSoon": "Coming Soon",
+    "customPrice": "Custom pricing",
+    "requestBlend": "Request blend",
+    "notifyMe": "Contact us",
+    "units": {
+      "perGram": "/ g",
+      "perGramBadge": "Per gram",
+      "grams": "g",
+      "jar": "Jar"
+    },
+    "categories": {
+      "natural-honey": "Natural Bee Honey",
+      "sidr": "Sidr Honey",
+      "bee-products": "Bee Products",
+      "mixed-honey": "Mixed Honey",
+      "formulations": "Therapeutic Blends",
+      "vip-formulations": "VIP Blends",
+      "natural-oils": "Natural Oils & Rural Products",
+      "dates": "Dates"
+    },
+    "categoryDescriptions": {
+      "natural-honey": "Pure natural honey varieties with fixed jar pricing.",
+      "sidr": "Premium mountain Sidr honey from selected sources.",
+      "bee-products": "Natural bee products sold by the gram.",
+      "mixed-honey": "Premium prepared honey blends.",
+      "formulations": "Custom therapeutic blends — our team contacts you after ordering.",
+      "vip-formulations": "VIP custom blends with specialist guidance — pricing depends on your case.",
+      "natural-oils": "Natural oils and rural products — coming soon.",
+      "dates": "Premium dates — coming soon."
+    },
+    "items": {
+      "clover-blossom": {
+        "name": "Clover Blossom Honey",
+        "description": "Natural clover blossom honey with a smooth, sweet taste."
+      },
+      "citrus-blossom": {
+        "name": "Citrus Blossom Honey",
+        "description": "Citrus blossom honey with a fresh aroma and distinctive flavor."
+      },
+      "black-seed-honey": {
+        "name": "Black Seed Honey",
+        "description": "Black seed honey rich in benefits and bold flavor."
+      },
+      "sage-honey": {
+        "name": "Sage Honey",
+        "description": "Natural sage honey with a distinctive herbal note."
+      },
+      "wild-herbs-honey": {
+        "name": "Wild Herbs Honey",
+        "description": "Honey from diverse wild herb nectar."
+      },
+      "nuts-honey": {
+        "name": "Honey with Nuts",
+        "description": "Natural honey with selected nuts."
+      },
+      "citrus-wax": {
+        "name": "Citrus Wax",
+        "description": "High-quality natural citrus wax."
+      },
+      "clover-wax": {
+        "name": "Clover Blossom Wax",
+        "description": "Pure clover blossom wax from trusted apiaries."
+      },
+      "fennel-honey": {
+        "name": "Fennel Honey",
+        "description": "Fennel honey with a distinctive aromatic flavor."
+      },
+      "acacia-sunt": {
+        "name": "Acacia Honey",
+        "description": "Natural acacia honey with a golden color and refined taste."
+      },
+      "anise-honey": {
+        "name": "Anise Honey",
+        "description": "Anise honey with a warm, distinctive flavor."
+      },
+      "sidr-egyptian": {
+        "name": "Egyptian Mountain Sidr",
+        "description": "Authentic Egyptian mountain Sidr honey."
+      },
+      "sidr-kashmiri": {
+        "name": "Kashmiri Mountain Sidr",
+        "description": "Premium Kashmiri Sidr honey with rich flavor."
+      },
+      "sidr-hadhrami": {
+        "name": "Hadhrami Mountain Sidr",
+        "description": "Premium Hadhrami Sidr honey."
+      },
+      "sidr-saudi": {
+        "name": "Saudi Mountain Sidr",
+        "description": "High-quality Saudi mountain Sidr honey."
+      },
+      "white-russian": {
+        "name": "White Russian Honey",
+        "description": "Rare white Russian honey with a light color and smooth taste."
+      },
+      "royal-jelly": {
+        "name": "Royal Jelly",
+        "description": "Natural royal jelly — priced per gram."
+      },
+      "bee-pollen": {
+        "name": "Bee Pollen",
+        "description": "Natural bee pollen — priced per gram."
+      },
+      "palm-pollen": {
+        "name": "Palm Pollen",
+        "description": "Natural palm pollen — priced per gram."
+      },
+      "red-ginseng": {
+        "name": "Red Korean Ginseng",
+        "description": "Original red Korean ginseng — priced per gram."
+      },
+      "propolis": {
+        "name": "Propolis",
+        "description": "Natural bee propolis — priced per gram."
+      },
+      "ginseng-honey": {
+        "name": "Ginseng Honey",
+        "description": "Ginseng honey blend for energy and vitality."
+      },
+      "royal-honey-blend": {
+        "name": "Royal Honey Blend",
+        "description": "Premium royal honey blend."
+      },
+      "propolis-honey": {
+        "name": "Propolis Honey",
+        "description": "Honey blended with natural propolis."
+      },
+      "squeeze-honey": {
+        "name": "Squeeze Honey",
+        "description": "Ready-to-use squeeze honey for daily use."
+      },
+      "custom-formulation": {
+        "name": "Custom Therapeutic Blend",
+        "description": "Therapeutic blends tailored to each person. After you order, our specialist team contacts you to prepare your blend and confirm pricing."
+      },
+      "vip-formulation": {
+        "name": "Custom VIP Blend",
+        "description": "VIP therapeutic blends with specialist supervision. Pricing is confirmed after consultation."
+      },
+      "rural-products": {
+        "name": "Natural Oils & Rural Products",
+        "description": "Coming soon — a variety of natural oils and rural products."
+      },
+      "madinah-dates": {
+        "name": "Madinah Dates",
+        "description": "Coming soon — premium Madinah dates."
+      },
+      "qassim-dates": {
+        "name": "Qassim Dates",
+        "description": "Coming soon — premium Qassim dates."
+      },
+      "majdoul-dates": {
+        "name": "Medjool Dates",
+        "description": "Coming soon — Medjool dates."
+      },
+      "ajwa-dates": {
+        "name": "Ajwa Dates",
+        "description": "Coming soon — Ajwa dates from Madinah."
+      },
+      "sukkari-dates": {
+        "name": "Sukkari Dates",
+        "description": "Coming soon — Sukkari dates."
+      }
+    }
+  },
+  "About": {
+    "title": "About Us",
+    "description": "Our story, our values, and our commitment to bringing you the finest honey.",
+    "storyTitle": "From Hive to Home",
+    "storyP1": "Organic Store was born from a simple belief: everyone deserves access to pure, honest honey. We partner directly with local beekeepers across Saudi Arabia, ensuring fair trade and the highest quality standards.",
+    "storyP2": "Every jar is traceable to its source apiary. We never blend, heat, or process our honey — preserving the natural enzymes, flavors, and health benefits that make raw honey so special.",
+    "valuesTitle": "Our Values",
+    "value1Icon": "🍯",
+    "value1Title": "Purity",
+    "value1Text": "No additives, no shortcuts — just pure honey as nature intended.",
+    "value2Icon": "🤝",
+    "value2Title": "Fair Trade",
+    "value2Text": "We pay beekeepers fairly and support sustainable beekeeping practices.",
+    "value3Icon": "🌍",
+    "value3Title": "Sustainability",
+    "value3Text": "Protecting bee populations and their natural habitats is at our core.",
+    "value4Icon": "✅",
+    "value4Title": "Transparency",
+    "value4Text": "Full traceability from hive to jar — know exactly where your honey comes from.",
+    "processTitle": "How It Works",
+    "step1Title": "Harvest",
+    "step1Text": "Beekeepers harvest honey at peak season when flavor and nutrients are richest.",
+    "step2Title": "Test & Pack",
+    "step2Text": "Each batch is lab-tested for purity, then gently packed without heating.",
+    "step3Title": "Deliver",
+    "step3Text": "Fresh honey arrives at your door within 48 hours of packing."
+  },
+  "Blog": {
+    "title": "Blog",
+    "description": "Tips, recipes, and stories from the hive.",
+    "posts": {
+      "storage": {
+        "title": "How to Store Honey Properly",
+        "excerpt": "Keep your honey fresh and flavorful with these simple storage tips."
+      },
+      "benefits": {
+        "title": "Health Benefits of Raw Honey",
+        "excerpt": "Discover why raw, unprocessed honey is a powerhouse of natural goodness."
+      },
+      "recipes": {
+        "title": "Honey in Arabic Cuisine",
+        "excerpt": "Traditional and modern ways to use honey in Middle Eastern cooking."
+      }
+    }
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "description": "We'd love to hear from you — for orders, partnerships, or questions.",
+    "infoTitle": "Contact Information",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "hoursLabel": "Working Hours",
+    "hours": "Sat – Thu, 9:00 AM – 6:00 PM",
+    "addressLabel": "Address",
+    "address": "Cairo, Egypt",
+    "wholesaleTitle": "Wholesale Inquiries",
+    "wholesaleText": "Interested in bulk orders or partnerships? Contact us for special pricing and custom packaging options.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "subject": "Subject",
+    "message": "Your Message",
+    "submit": "Send Message",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thank you for reaching out. We'll get back to you within 24 hours."
+  }
+}
