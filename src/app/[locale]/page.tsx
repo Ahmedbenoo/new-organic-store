@@ -12,7 +12,7 @@ const ProductSlider = dynamic(
   () => import("@/components/shop/product-slider"),
   {
     loading: () => (
-      <div className="mx-auto aspect-[4/5] w-96 max-w-full animate-pulse rounded-3xl bg-secondary/50 sm:w-[26rem]" />
+      <div className="mx-auto aspect-[4/5] w-full max-w-[26rem] animate-pulse rounded-3xl bg-secondary/50" />
     ),
   },
 );
@@ -82,7 +82,7 @@ export default async function HomePage({ params }: Props) {
             </dl>
           </div>
 
-          <div className="animate-scale-in relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="animate-scale-in relative mx-auto w-full min-w-0 max-w-[26rem] lg:max-w-none lg:justify-self-end">
             <ProductSlider />
           </div>
           </SiteTwoColumnGrid>

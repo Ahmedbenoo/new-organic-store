@@ -85,8 +85,8 @@ export default function ProductSlider() {
 
   if (loading) {
     return (
-      <div className="relative mx-auto w-fit overflow-hidden rounded-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-100 p-1.5 shadow-2xl">
-        <div className="relative w-96 animate-pulse p-2 sm:w-[26rem]">
+      <div className="relative mx-auto w-full max-w-[26rem] overflow-hidden rounded-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-100 p-1.5 shadow-2xl">
+        <div className="relative w-full animate-pulse p-1.5 sm:p-2">
           <div className="aspect-[4/5] w-full rounded-3xl bg-amber-200/60" />
         </div>
       </div>
@@ -101,7 +101,7 @@ export default function ProductSlider() {
   const slideLabel = locale === "ar" ? activeSlide.label_ar : activeSlide.label_en;
 
   return (
-    <div className="relative mx-auto w-fit overflow-hidden rounded-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-100 p-1.5 shadow-2xl">
+    <div className="relative mx-auto w-full max-w-[26rem] overflow-hidden rounded-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-100 p-1.5 shadow-2xl">
       <div className="absolute inset-0 opacity-20">
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -125,7 +125,7 @@ export default function ProductSlider() {
         </svg>
       </div>
 
-      <div className="relative w-96 p-2 sm:w-[26rem]">
+      <div className="relative w-full p-1.5 sm:p-2">
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl shadow-lg">
           <Image
             key={activeSlide.id}
@@ -133,20 +133,20 @@ export default function ProductSlider() {
             alt={slideLabel}
             fill
             priority={activeIndex === 0}
-            className="scale-110 object-cover object-center"
-            sizes="(max-width: 768px) 384px, 416px"
+            className="object-cover object-center"
+            sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 1024px) min(100vw - 4rem, 26rem), 416px"
           />
 
-          <div className="absolute inset-y-0 start-3 flex items-center sm:start-4">
+          <div className="absolute inset-y-0 start-2 flex items-center sm:start-3 md:start-4">
             <button
               type="button"
               onClick={goToPrevious}
-              className="flex size-9 items-center justify-center rounded-full bg-white/90 shadow-md transition hover:bg-white sm:size-10"
+              className="flex size-8 items-center justify-center rounded-full bg-white/90 shadow-md transition hover:bg-white sm:size-9 md:size-10"
               aria-label="Previous slide"
             >
               <svg
                 viewBox="0 0 24 24"
-                className="size-5 text-amber-600"
+                className="size-4 text-amber-600 sm:size-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
@@ -157,16 +157,16 @@ export default function ProductSlider() {
             </button>
           </div>
 
-          <div className="absolute inset-y-0 end-3 flex items-center sm:end-4">
+          <div className="absolute inset-y-0 end-2 flex items-center sm:end-3 md:end-4">
             <button
               type="button"
               onClick={goToNext}
-              className="flex size-9 items-center justify-center rounded-full bg-white/90 shadow-md transition hover:bg-white sm:size-10"
+              className="flex size-8 items-center justify-center rounded-full bg-white/90 shadow-md transition hover:bg-white sm:size-9 md:size-10"
               aria-label="Next slide"
             >
               <svg
                 viewBox="0 0 24 24"
-                className="size-5 text-amber-600"
+                className="size-4 text-amber-600 sm:size-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
