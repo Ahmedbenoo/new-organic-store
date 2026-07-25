@@ -33,28 +33,31 @@ export default function AdminShell() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Top bar */}
       <header className="sticky top-0 z-20 border-b border-gray-200 bg-white shadow-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🍯</span>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">Organic Store</h1>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-6">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <span className="text-xl sm:text-2xl">🍯</span>
+            <div className="min-w-0">
+              <h1 className="truncate text-base font-bold text-gray-900 sm:text-lg">
+                Organic Store
+              </h1>
               <p className="text-xs text-gray-500">Admin Dashboard</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             <a
               href="/"
               target="_blank"
-              className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50"
+              rel="noreferrer"
+              className="rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-600 transition hover:bg-gray-50 sm:px-3 sm:text-sm"
             >
-              View Site
+              <span className="hidden sm:inline">View Site</span>
+              <span className="sm:hidden">Site</span>
             </a>
             <button
               type="button"
               onClick={logout}
-              className="rounded-lg bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-100"
+              className="rounded-lg bg-red-50 px-2.5 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100 sm:px-3 sm:text-sm"
             >
               Logout
             </button>
@@ -62,31 +65,47 @@ export default function AdminShell() {
         </div>
       </header>
 
-      {/* Tab nav */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-gray-200 bg-white px-4 py-3 md:hidden">
+        <label htmlFor="admin-tab-select" className="sr-only">
+          Dashboard section
+        </label>
+        <select
+          id="admin-tab-select"
+          value={activeTab}
+          onChange={(event) => setActiveTab(event.target.value as Tab)}
+          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+        >
+          {tabs.map((tab) => (
+            <option key={tab.id} value={tab.id}>
+              {tab.icon} {tab.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="hidden border-b border-gray-200 bg-white md:block">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <nav className="-mb-px flex gap-1">
+          <nav className="-mb-px flex gap-1 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition ${
+                className={`flex shrink-0 items-center gap-2 border-b-2 px-3 py-3 text-sm font-medium transition lg:px-4 ${
                   activeTab === tab.id
                     ? "border-amber-500 text-amber-600"
                     : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                 }`}
               >
                 <span>{tab.icon}</span>
-                {tab.label}
+                <span className="whitespace-nowrap">{tab.label}</span>
               </button>
             ))}
           </nav>
         </div>
       </div>
 
-      {/* Content */}
-      <main className="flex-1">
+      <main className="min-w-0 flex-1">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
           {activeTab === "orders" && <AdminOrders />}
           {activeTab === "products" && <AdminProducts />}

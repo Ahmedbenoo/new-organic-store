@@ -137,20 +137,20 @@ export default function AdminSettings() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-xl font-bold text-gray-900">Site Settings</h2>
         <button
           type="button"
           onClick={saveAll}
           disabled={saving}
-          className="rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
+          className="w-full rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
         >
           {saving ? "Saving..." : "Save All Changes"}
         </button>
       </div>
 
       {toast ? (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-lg">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}

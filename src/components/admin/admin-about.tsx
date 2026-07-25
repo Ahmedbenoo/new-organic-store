@@ -185,11 +185,12 @@ export default function AdminAbout() {
             Edit every element on the About Us page in Arabic and English.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <a
             href="/ar/about"
             target="_blank"
-            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
+            rel="noreferrer"
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-center text-sm font-semibold text-gray-600 transition hover:bg-gray-50 sm:w-auto"
           >
             Preview page
           </a>
@@ -197,7 +198,7 @@ export default function AdminAbout() {
             type="button"
             onClick={saveContent}
             disabled={saving}
-            className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
+            className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
           >
             {saving ? "Saving..." : "Save About Page"}
           </button>
@@ -205,7 +206,7 @@ export default function AdminAbout() {
       </div>
 
       {toast ? (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-lg">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}

@@ -112,12 +112,12 @@ export default function AdminOrders() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-xl font-bold text-gray-900">Orders</h2>
         <button
           type="button"
           onClick={refreshOrders}
-          className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-50 sm:w-auto sm:py-1.5"
         >
           Refresh
         </button>
@@ -170,8 +170,66 @@ export default function AdminOrders() {
           <p className="mt-2 font-medium text-gray-500">No orders yet</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-          <table className="min-w-full divide-y divide-gray-200">
+        <>
+          <div className="space-y-3 md:hidden">
+            {filtered.map((order) => (
+              <article
+                key={order.id}
+                className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium text-gray-900">{order.customer_name}</p>
+                    <p className="text-xs text-gray-500">{order.customer_phone}</p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${
+                      STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+
+                <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <dt className="text-xs text-gray-500">Items</dt>
+                    <dd className="font-medium text-gray-900">
+                      {order.items.length} item{order.items.length !== 1 ? "s" : ""}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-gray-500">Total</dt>
+                    <dd className="font-semibold text-gray-900">
+                      {order.total.toLocaleString()} EGP
+                    </dd>
+                  </div>
+                  <div className="col-span-2">
+                    <dt className="text-xs text-gray-500">Date</dt>
+                    <dd className="text-gray-700">
+                      {new Date(order.created_at).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </dd>
+                  </div>
+                </dl>
+
+                <button
+                  type="button"
+                  onClick={() => setSelected(order)}
+                  className="mt-4 w-full rounded-xl bg-amber-50 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-100"
+                >
+                  View details
+                </button>
+              </article>
+            ))}
+          </div>
+
+          <div className="hidden overflow-hidden rounded-2xl border border-gray-200 bg-white md:block">
+            <div className="overflow-x-auto">
+              <table className="min-w-[640px] w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
@@ -233,31 +291,34 @@ export default function AdminOrders() {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       {/* Order detail modal */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setSelected(null)}
           />
-          <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+          <div className="relative z-10 max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:max-w-lg sm:rounded-2xl">
+            <div className="sticky top-0 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-4 sm:px-6">
               <h3 className="text-lg font-bold text-gray-900">Order Details</h3>
               <button
                 type="button"
                 onClick={() => setSelected(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                aria-label="Close"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-5 p-6">
-              <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="space-y-5 p-4 sm:p-6">
+              <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
                 <div>
                   <p className="text-gray-500">Customer</p>
                   <p className="font-semibold text-gray-900">{selected.customer_name}</p>

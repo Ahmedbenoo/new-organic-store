@@ -155,18 +155,19 @@ export default function AdminBlog() {
             Manage blog page content and posts in Arabic and English.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <a
             href="/ar/blog"
             target="_blank"
-            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
+            rel="noreferrer"
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-center text-sm font-semibold text-gray-600 transition hover:bg-gray-50 sm:w-auto"
           >
             Preview blog
           </a>
           <button
             type="button"
             onClick={addPost}
-            className="rounded-xl border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50"
+            className="w-full rounded-xl border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 sm:w-auto"
           >
             + Add Post
           </button>
@@ -174,7 +175,7 @@ export default function AdminBlog() {
             type="button"
             onClick={saveBlog}
             disabled={saving}
-            className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
+            className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
           >
             {saving ? "Saving..." : "Save Blog"}
           </button>
@@ -182,7 +183,7 @@ export default function AdminBlog() {
       </div>
 
       {toast ? (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-lg">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}

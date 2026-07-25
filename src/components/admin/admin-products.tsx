@@ -192,7 +192,7 @@ export default function AdminProducts() {
             setEditing({ ...EMPTY_PRODUCT });
             setIsCreating(true);
           }}
-          className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
+          className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 sm:w-auto"
         >
           + Add Product
         </button>
@@ -228,7 +228,7 @@ export default function AdminProducts() {
       </div>
 
       {toast ? (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-lg">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
@@ -312,7 +312,7 @@ export default function AdminProducts() {
       )}
 
       {editing ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => {
@@ -320,8 +320,8 @@ export default function AdminProducts() {
               setIsCreating(false);
             }}
           />
-          <div className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
-            <div className="sticky top-0 flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4">
+          <div className="relative z-10 max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:max-w-3xl sm:rounded-2xl">
+            <div className="sticky top-0 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-4 sm:px-6">
               <h3 className="text-lg font-bold text-gray-900">
                 {isCreating ? "Add Product" : "Edit Product"}
               </h3>
@@ -337,7 +337,7 @@ export default function AdminProducts() {
               </button>
             </div>
 
-            <div className="space-y-5 p-6">
+            <div className="space-y-5 p-4 sm:p-6">
               <ImagePicker
                 value={editing.image_url}
                 onChange={(image_url) => setEditing({ ...editing, image_url })}
@@ -403,7 +403,7 @@ export default function AdminProducts() {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-4">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
                     Price
