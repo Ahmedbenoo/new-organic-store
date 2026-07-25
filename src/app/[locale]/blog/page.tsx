@@ -14,6 +14,8 @@ type Props = {
   params: Promise<{ locale: AppLocale }>;
 };
 
+export const revalidate = 60;
+
 export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);

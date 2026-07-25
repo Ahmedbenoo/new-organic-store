@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/api-auth";
 import { createProduct, readProducts } from "@/lib/products-store";
+import { revalidateProductPages } from "@/lib/revalidate-storefront";
 import type { CatalogProduct } from "@/lib/types";
 
 export async function GET(request: Request) {
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
       sort_order: body.sort_order ?? 999,
     });
 
+    revalidateProductPages();
     return NextResponse.json({ product }, { status: 201 });
   } catch (error) {
     console.error("Failed to create product:", error);

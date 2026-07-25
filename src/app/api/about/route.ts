@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { readAboutContent, updateAboutContent } from "@/lib/about-store";
 import { requireAdminApi } from "@/lib/api-auth";
+import { revalidateAboutPages } from "@/lib/revalidate-storefront";
 import type { AboutPageContent } from "@/lib/types";
 
 export async function GET() {
@@ -23,6 +24,7 @@ export async function PUT(request: Request) {
 
     const body = (await request.json()) as Partial<AboutPageContent>;
     const content = await updateAboutContent(body);
+    revalidateAboutPages();
     return NextResponse.json({ content });
   } catch (error) {
     console.error("Failed to save about content:", error);

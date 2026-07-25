@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/api-auth";
+import { revalidateSettingsPages } from "@/lib/revalidate-storefront";
 import {
   ADMIN_PASSWORD_KEY,
   readAdminSettings,
@@ -45,6 +46,7 @@ export async function PUT(request: Request) {
     }
 
     const settings = await updateSettings(body);
+    revalidateSettingsPages();
     return NextResponse.json({ settings });
   } catch (error) {
     console.error("Failed to update settings:", error);

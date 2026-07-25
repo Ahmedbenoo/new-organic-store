@@ -5,6 +5,7 @@ import {
   readProductById,
   updateProduct,
 } from "@/lib/products-store";
+import { revalidateProductPages } from "@/lib/revalidate-storefront";
 import type { CatalogProduct } from "@/lib/types";
 
 type RouteContext = {
@@ -43,6 +44,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
+    revalidateProductPages();
     return NextResponse.json({ product });
   } catch (error) {
     console.error("Failed to update product:", error);
@@ -65,6 +67,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
+    revalidateProductPages();
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Failed to delete product:", error);

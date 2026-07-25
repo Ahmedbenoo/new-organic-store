@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -28,14 +29,14 @@ export function ProductsProvider({
   children: ReactNode;
   initialProducts?: CatalogProduct[];
 }) {
-  const [products, setProducts] = useState<CatalogProduct[]>(initialProducts);
+  const [products, setProducts] = useState(initialProducts);
   const [loading, setLoading] = useState(initialProducts.length === 0);
 
-  async function refreshProducts() {
+  const refreshProducts = useCallback(async () => {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/products");
+      const response = await fetch("/api/products", { cache: "no-store" });
       const payload = (await response.json()) as {
         products?: CatalogProduct[];
       };
@@ -46,16 +47,16 @@ export function ProductsProvider({
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    if (initialProducts.length > 0) return;
-
     let cancelled = false;
 
-    async function loadProducts() {
+    async function syncProducts() {
+      setLoading(true);
+
       try {
-        const response = await fetch("/api/products");
+        const response = await fetch("/api/products", { cache: "no-store" });
         const payload = (await response.json()) as {
           products?: CatalogProduct[];
         };
@@ -68,12 +69,12 @@ export function ProductsProvider({
       }
     }
 
-    void loadProducts();
+    void syncProducts();
 
     return () => {
       cancelled = true;
     };
-  }, [initialProducts.length]);
+  }, []);
 
   const value = useMemo<ProductsContextValue>(() => {
     const map = new Map(products.map((product) => [product.id, product]));
@@ -98,7 +99,7 @@ export function ProductsProvider({
       },
       refreshProducts,
     };
-  }, [products, loading]);
+  }, [products, loading, refreshProducts]);
 
   return (
     <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>

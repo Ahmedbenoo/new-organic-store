@@ -24,6 +24,8 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

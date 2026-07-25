@@ -3,28 +3,15 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import PageHeader from "@/components/layout/page-header";
-import {
-  getBlogLocalizedField,
-  readBlogData,
-  readBlogPostBySlug,
-} from "@/lib/blog-store";
+import { getBlogLocalizedField, readBlogPostBySlug } from "@/lib/blog-store";
 import type { AppLocale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: AppLocale; slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const data = await readBlogData({ activeOnly: true });
-  const locales: AppLocale[] = ["ar", "en"];
-
-  return locales.flatMap((locale) =>
-    data.posts.map((post) => ({
-      locale,
-      slug: post.id,
-    })),
-  );
-}
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export default async function BlogPostPage({ params }: Props) {
   const { locale, slug } = await params;

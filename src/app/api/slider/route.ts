@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/api-auth";
+import { revalidateSliderPages } from "@/lib/revalidate-storefront";
 import { readSlides, replaceSlides } from "@/lib/slider-store";
 import type { HeroSlide } from "@/lib/types";
 
@@ -36,6 +37,7 @@ export async function PUT(request: Request) {
     }
 
     const slides = await replaceSlides(body.slides);
+    revalidateSliderPages();
     return NextResponse.json({ slides });
   } catch (error) {
     console.error("Failed to save slider:", error);
