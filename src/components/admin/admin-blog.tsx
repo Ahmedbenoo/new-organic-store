@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
+import { adminLabels } from "@/lib/admin-labels";
 import type { BlogData, BlogPageSettings, BlogPostRecord } from "@/lib/types";
 
 function createEmptyPost(sortOrder: number): BlogPostRecord {
@@ -11,7 +12,7 @@ function createEmptyPost(sortOrder: number): BlogPostRecord {
 
   return {
     id: `post-${Date.now()}`,
-    title_ar: "مقال جديد",
+    title_ar: adminLabels.blog.newPost,
     title_en: "New post",
     excerpt_ar: "",
     excerpt_en: "",
@@ -101,7 +102,7 @@ export default function AdminBlog() {
   }
 
   function removePost(id: string) {
-    if (!window.confirm("Delete this blog post?")) return;
+    if (!window.confirm(adminLabels.blog.deleteConfirm)) return;
 
     setPosts((prev) =>
       prev
@@ -123,36 +124,36 @@ export default function AdminBlog() {
       });
 
       if (!response.ok) {
-        showToast("Error saving blog");
+        showToast(adminLabels.blog.errorSaving);
         return;
       }
 
       const payload = (await response.json()) as BlogData;
       setSettings(payload.settings);
       setPosts(payload.posts);
-      showToast("Blog saved!");
+      showToast(adminLabels.blog.saved);
     } catch {
-      showToast("Error saving blog");
+      showToast(adminLabels.blog.errorSaving);
     } finally {
       setSaving(false);
     }
   }
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Loading blog...</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.blog.loading}</div>;
   }
 
   if (!settings) {
-    return <div className="py-12 text-center text-gray-400">Failed to load blog.</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.blog.loadFailed}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Blog</h2>
+          <h2 className="text-xl font-bold text-gray-900">{adminLabels.blog.title}</h2>
           <p className="text-sm text-gray-500">
-            Manage blog page content and posts in Arabic and English.
+            {adminLabels.blog.subtitle}
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
@@ -162,14 +163,14 @@ export default function AdminBlog() {
             rel="noreferrer"
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-center text-sm font-semibold text-gray-600 transition hover:bg-gray-50 sm:w-auto"
           >
-            Preview blog
+            {adminLabels.blog.previewBlog}
           </a>
           <button
             type="button"
             onClick={addPost}
             className="w-full rounded-xl border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 sm:w-auto"
           >
-            + Add Post
+            {adminLabels.blog.addPost}
           </button>
           <button
             type="button"
@@ -177,28 +178,28 @@ export default function AdminBlog() {
             disabled={saving}
             className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
           >
-            {saving ? "Saving..." : "Save Blog"}
+            {saving ? adminLabels.saving : adminLabels.blog.saveBlog}
           </button>
         </div>
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:end-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
 
       <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
         <div className="border-b border-gray-100 bg-gray-50 px-5 py-3">
-          <h3 className="text-sm font-semibold text-gray-700">Blog page header</h3>
+          <h3 className="text-sm font-semibold text-gray-700">{adminLabels.blog.pageHeader}</h3>
         </div>
         <div className="grid gap-4 p-5 sm:grid-cols-2">
           {(
             [
-              ["title_ar", "Page title (Arabic)"],
-              ["title_en", "Page title (English)"],
-              ["description_ar", "Page description (Arabic)"],
-              ["description_en", "Page description (English)"],
+              ["title_ar", adminLabels.fields.pageTitleArabic],
+              ["title_en", adminLabels.fields.pageTitleEnglish],
+              ["description_ar", adminLabels.fields.pageDescriptionArabic],
+              ["description_en", adminLabels.fields.pageDescriptionEnglish],
             ] as const
           ).map(([key, label]) => (
             <div key={key}>
@@ -219,13 +220,13 @@ export default function AdminBlog() {
 
       {posts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-16 text-center">
-          <p className="text-lg font-semibold text-gray-700">No blog posts yet</p>
+          <p className="text-lg font-semibold text-gray-700">{adminLabels.blog.noPosts}</p>
           <button
             type="button"
             onClick={addPost}
             className="mt-4 rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white"
           >
-            Add first post
+            {adminLabels.blog.addFirstPost}
           </button>
         </div>
       ) : (
@@ -269,14 +270,14 @@ export default function AdminBlog() {
                             : "bg-gray-300 text-gray-600"
                         }`}
                       >
-                        {post.active ? "Published" : "Hidden"}
+                        {post.active ? adminLabels.published : adminLabels.hidden}
                       </button>
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Slug (URL id)
+                          {adminLabels.fields.slug}
                         </label>
                         <input
                           type="text"
@@ -294,7 +295,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Emoji
+                          {adminLabels.emoji}
                         </label>
                         <input
                           type="text"
@@ -307,7 +308,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Title (Arabic)
+                          {adminLabels.fields.titleArabic}
                         </label>
                         <input
                           type="text"
@@ -321,7 +322,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Title (English)
+                          {adminLabels.fields.titleEnglish}
                         </label>
                         <input
                           type="text"
@@ -334,7 +335,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Date
+                          {adminLabels.date}
                         </label>
                         <input
                           type="date"
@@ -347,7 +348,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Read time (minutes)
+                          {adminLabels.fields.readTimeMinutes}
                         </label>
                         <input
                           type="number"
@@ -366,7 +367,7 @@ export default function AdminBlog() {
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Excerpt (Arabic)
+                          {adminLabels.fields.excerptArabic}
                         </label>
                         <textarea
                           rows={2}
@@ -380,7 +381,7 @@ export default function AdminBlog() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Excerpt (English)
+                          {adminLabels.fields.excerptEnglish}
                         </label>
                         <textarea
                           rows={2}
@@ -393,7 +394,7 @@ export default function AdminBlog() {
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Content (Arabic)
+                          {adminLabels.fields.contentArabic}
                         </label>
                         <textarea
                           rows={5}
@@ -407,7 +408,7 @@ export default function AdminBlog() {
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Content (English)
+                          {adminLabels.fields.contentEnglish}
                         </label>
                         <textarea
                           rows={5}
@@ -427,7 +428,7 @@ export default function AdminBlog() {
                         disabled={index === 0}
                         className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 disabled:opacity-40"
                       >
-                        Move up
+                        {adminLabels.moveUp}
                       </button>
                       <button
                         type="button"
@@ -435,27 +436,27 @@ export default function AdminBlog() {
                         disabled={index === posts.length - 1}
                         className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 disabled:opacity-40"
                       >
-                        Move down
+                        {adminLabels.moveDown}
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingId(isEditing ? null : post.id)}
                         className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white"
                       >
-                        {isEditing ? "Close image picker" : "Change image"}
+                        {isEditing ? adminLabels.closeImagePicker : adminLabels.changeImage}
                       </button>
                       <button
                         type="button"
                         onClick={() => removePost(post.id)}
                         className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600"
                       >
-                        Delete
+                        {adminLabels.delete}
                       </button>
                     </div>
 
                     {isEditing ? (
                       <ImagePicker
-                        label="Post cover image"
+                        label={adminLabels.blog.postCoverImage}
                         value={post.image_url}
                         onChange={(image_url) => updatePost(post.id, { image_url })}
                       />

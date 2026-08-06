@@ -9,26 +9,43 @@ import AdminOrders from "@/components/admin/admin-orders";
 import AdminSlider from "@/components/admin/admin-slider";
 import AdminAbout from "@/components/admin/admin-about";
 import AdminBlog from "@/components/admin/admin-blog";
+import AdminOffers from "@/components/admin/admin-offers";
+import AdminPartnerships from "@/components/admin/admin-partnerships";
+import { adminLabels } from "@/lib/admin-labels";
 
-type Tab = "orders" | "products" | "slider" | "about" | "blog" | "settings";
+type Tab =
+  | "orders"
+  | "products"
+  | "offers"
+  | "partnerships"
+  | "slider"
+  | "about"
+  | "blog"
+  | "settings";
 
 export default function AdminShell() {
   const { isAuthenticated, logout, loading } = useAdminAuth();
   const [activeTab, setActiveTab] = useState<Tab>("orders");
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Checking session...</div>;
+    return (
+      <div className="py-12 text-center text-gray-400">
+        {adminLabels.checkingSession}
+      </div>
+    );
   }
 
   if (!isAuthenticated) return <AdminLogin />;
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: "orders", label: "Orders", icon: "📦" },
-    { id: "products", label: "Products", icon: "🍯" },
-    { id: "slider", label: "Hero Slider", icon: "🖼️" },
-    { id: "about", label: "About Page", icon: "📖" },
-    { id: "blog", label: "Blog", icon: "✍️" },
-    { id: "settings", label: "Site Settings", icon: "⚙️" },
+    { id: "orders", label: adminLabels.tabs.orders, icon: "📦" },
+    { id: "products", label: adminLabels.tabs.products, icon: "🍯" },
+    { id: "offers", label: adminLabels.tabs.offers, icon: "🏷️" },
+    { id: "partnerships", label: adminLabels.tabs.partnerships, icon: "🤝" },
+    { id: "slider", label: adminLabels.tabs.slider, icon: "🖼️" },
+    { id: "about", label: adminLabels.tabs.about, icon: "📖" },
+    { id: "blog", label: adminLabels.tabs.blog, icon: "✍️" },
+    { id: "settings", label: adminLabels.tabs.settings, icon: "⚙️" },
   ];
 
   return (
@@ -41,7 +58,7 @@ export default function AdminShell() {
               <h1 className="truncate text-base font-bold text-gray-900 sm:text-lg">
                 Organic Store
               </h1>
-              <p className="text-xs text-gray-500">Admin Dashboard</p>
+              <p className="text-xs text-gray-500">{adminLabels.dashboardSubtitle}</p>
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
@@ -51,15 +68,15 @@ export default function AdminShell() {
               rel="noreferrer"
               className="rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-600 transition hover:bg-gray-50 sm:px-3 sm:text-sm"
             >
-              <span className="hidden sm:inline">View Site</span>
-              <span className="sm:hidden">Site</span>
+              <span className="hidden sm:inline">{adminLabels.viewSite}</span>
+              <span className="sm:hidden">{adminLabels.viewSiteShort}</span>
             </a>
             <button
               type="button"
               onClick={logout}
               className="rounded-lg bg-red-50 px-2.5 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100 sm:px-3 sm:text-sm"
             >
-              Logout
+              {adminLabels.logout}
             </button>
           </div>
         </div>
@@ -67,7 +84,7 @@ export default function AdminShell() {
 
       <div className="border-b border-gray-200 bg-white px-4 py-3 md:hidden">
         <label htmlFor="admin-tab-select" className="sr-only">
-          Dashboard section
+          {adminLabels.dashboardSection}
         </label>
         <select
           id="admin-tab-select"
@@ -109,6 +126,8 @@ export default function AdminShell() {
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
           {activeTab === "orders" && <AdminOrders />}
           {activeTab === "products" && <AdminProducts />}
+          {activeTab === "offers" && <AdminOffers />}
+          {activeTab === "partnerships" && <AdminPartnerships />}
           {activeTab === "slider" && <AdminSlider />}
           {activeTab === "about" && <AdminAbout />}
           {activeTab === "blog" && <AdminBlog />}

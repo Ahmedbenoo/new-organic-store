@@ -45,3 +45,4 @@ next-env.d.ts
 /data/orders.json
 /data/products.json
 /data/site-settings.json
+/data/partnership-inquiries.json

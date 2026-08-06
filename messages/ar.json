@@ -29,7 +29,26 @@
     "currency": "ج.م",
     "addToCart": "أضف للسلة",
     "readMore": "اقرأ المزيد",
-    "minRead": "{minutes} دقائق قراءة"
+    "minRead": "{minutes} دقائق قراءة",
+    "whatsappFloatLabel": "تواصل معنا عبر واتساب",
+    "offersFloatLabel": "العروض",
+    "partnershipFloatLabel": "تعاقد معنا"
+  },
+  "PartnershipForm": {
+    "title": "تعاقد معنا",
+    "description": "املأ بيانات شركتك وسنتواصل معك في أقرب وقت.",
+    "companyName": "اسم الشركة",
+    "companyField": "مجال الشركة",
+    "phone": "رقم التليفون",
+    "address": "عنوان المؤسسة",
+    "inquirySubject": "استفسارك عن إيه؟",
+    "inquiryDetails": "تفاصيل الاستفسار",
+    "submit": "إرسال الطلب",
+    "submitting": "جاري الإرسال...",
+    "submitError": "تعذر إرسال الطلب. حاول مرة أخرى.",
+    "successTitle": "تم إرسال الطلب بنجاح",
+    "successMessage": "شكراً لك! استلمنا طلب التعاقد وسنتواصل معك قريباً.",
+    "close": "إغلاق"
   },
   "Search": {
     "title": "بحث المنتجات",
@@ -170,6 +189,7 @@
     "description": "تصفح أقسام العسل الطبيعي، السدر، منتجات النحل، التركيبات، والتمور.",
     "filters": {
       "all": "الكل",
+      "offers": "العروض الحالية",
       "natural-honey": "عسل النحل الطبيعي",
       "sidr": "عسل السدر",
       "bee-products": "منتجات النحل",
@@ -184,10 +204,14 @@
     "next": "التالي",
     "loading": "جاري تحميل المنتجات...",
     "emptyCategory": "لا توجد منتجات في هذا القسم حالياً.",
+    "emptyOffers": "لا توجد عروض حالية في الوقت الحالي. تابعنا قريباً!",
+    "offersTitle": "العروض الحالية",
+    "offersDescription": "خصومات وعروض محدودة على منتجات مختارة.",
     "showingResults": "عرض {from}–{to} من {total} منتج — الصفحة {page} من {pages}"
   },
   "Products": {
     "comingSoon": "قريباً",
+    "onOffer": "عرض",
     "customPrice": "حسب الحالة",
     "requestBlend": "اطلب تركيبة",
     "notifyMe": "تواصل معنا",

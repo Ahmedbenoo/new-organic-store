@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAdminAuth } from "@/context/admin-auth-context";
+import { adminLabels } from "@/lib/admin-labels";
 
 export default function AdminLogin() {
   const { login } = useAdminAuth();
@@ -17,7 +18,7 @@ export default function AdminLogin() {
     const ok = await login(password);
 
     if (!ok) {
-      setError("Incorrect password. Default password is: admin123");
+      setError(adminLabels.login.error);
     }
 
     setLoading(false);
@@ -29,20 +30,22 @@ export default function AdminLogin() {
         <div className="overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-xl">
           <div className="bg-gradient-to-r from-amber-400 to-orange-400 px-8 py-8 text-center">
             <span className="text-5xl">🍯</span>
-            <h1 className="mt-3 text-2xl font-bold text-white">Admin Dashboard</h1>
-            <p className="mt-1 text-sm text-white/80">Organic Store Management</p>
+            <h1 className="mt-3 text-2xl font-bold text-white">
+              {adminLabels.login.title}
+            </h1>
+            <p className="mt-1 text-sm text-white/80">{adminLabels.login.subtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5 p-8">
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Admin Password
+                {adminLabels.login.password}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter password"
+                placeholder={adminLabels.login.passwordPlaceholder}
                 required
                 className="w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
               />
@@ -59,7 +62,7 @@ export default function AdminLogin() {
               disabled={loading}
               className="w-full rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 py-3 font-semibold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? adminLabels.login.signingIn : adminLabels.login.signIn}
             </button>
           </form>
         </div>

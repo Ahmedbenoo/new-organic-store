@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="Organic Store">
+  <rect width="180" height="180" rx="40" fill="#FFFDF7"/>
+  <g transform="translate(90 93) scale(4.6)">
+    <path d="M0 6 L-3.5 12 L3.5 12 Z" fill="#3E2C1C"/>
+    <path d="M0-10 C-2-6-6-4-6 0 C-6 5-2 8 0 6 C2 8 6 5 6 0 C6-4 2-6 0-10Z" fill="#4E8F3F"/>
+    <path d="M-9-6 C-12-2-12 4-8 7 C-5 9-2 7-1 4 C-3 0-6-3-9-6Z" fill="#6AAF4E"/>
+    <path d="M9-6 C12-2 12 4 8 7 C5 9 2 7 1 4 C3 0 6-3 9-6Z" fill="#3D7A35"/>
+    <path d="M-14 0 C-15 5-12 9-8 9 C-5 9-3 6-4 3 C-7 1-11-1-14 0Z" fill="#7CB342"/>
+    <path d="M14 0 C15 5 12 9 8 9 C5 9 3 6 4 3 C7 1 11-1 14 0Z" fill="#2F6B32"/>
+  </g>
+</svg>

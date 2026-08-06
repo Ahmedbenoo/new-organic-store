@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
 import { productCategories } from "@/data/products";
+import { adminLabels, categoryLabel } from "@/lib/admin-labels";
 import type { CatalogProduct, ProductKind, ProductUnit, StoreCategory } from "@/lib/types";
 
 type EditingProduct = Omit<CatalogProduct, "created_at" | "updated_at"> & {
@@ -28,6 +29,7 @@ const EMPTY_PRODUCT: EditingProduct = {
   kind: "standard",
   image_url: "/assets/img1.jpeg",
   active: true,
+  on_offer: false,
   sort_order: 999,
 };
 
@@ -129,16 +131,16 @@ export default function AdminProducts() {
       );
 
       if (!response.ok) {
-        showToast("Error saving product");
+        showToast(adminLabels.products.errorSaving);
         return;
       }
 
-      showToast(isCreating ? "Product created!" : "Product saved!");
+      showToast(isCreating ? adminLabels.products.created : adminLabels.products.saved);
       setEditing(null);
       setIsCreating(false);
       await refreshProducts();
     } catch {
-      showToast("Error saving product");
+      showToast(adminLabels.products.errorSaving);
     } finally {
       setSaving(false);
     }
@@ -161,29 +163,31 @@ export default function AdminProducts() {
   }
 
   async function deleteProduct(productId: string) {
-    if (!window.confirm("Delete this product?")) return;
+    if (!window.confirm(adminLabels.products.deleteConfirm)) return;
 
     const response = await fetch(`/api/products/${productId}`, {
       method: "DELETE",
     });
 
     if (response.ok) {
-      showToast("Product deleted");
+      showToast(adminLabels.products.deleted);
       await refreshProducts();
     }
   }
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Loading products...</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.products.loading}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Products</h2>
+          <h2 className="text-xl font-bold text-gray-900">{adminLabels.products.title}</h2>
           <p className="text-sm text-gray-500">
-            {filteredProducts.length} of {products.length} products shown
+            {adminLabels.products.countShown
+              .replace("{shown}", String(filteredProducts.length))
+              .replace("{total}", String(products.length))}
           </p>
         </div>
         <button
@@ -194,7 +198,7 @@ export default function AdminProducts() {
           }}
           className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 sm:w-auto"
         >
-          + Add Product
+          {adminLabels.products.addProduct}
         </button>
       </div>
 
@@ -207,7 +211,7 @@ export default function AdminProducts() {
             type="search"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search by Arabic/English name, ID, or category..."
+            placeholder={adminLabels.products.searchPlaceholder}
             className="w-full rounded-xl border border-gray-200 bg-white py-2.5 ps-10 pe-4 text-sm outline-none focus:border-amber-400"
           />
         </div>
@@ -218,26 +222,26 @@ export default function AdminProducts() {
           }
           className="rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-amber-400 sm:min-w-52"
         >
-          <option value="all">All categories</option>
+          <option value="all">{adminLabels.products.allCategories}</option>
           {CATEGORY_OPTIONS.map((category) => (
             <option key={category} value={category}>
-              {category}
+              {categoryLabel(category)}
             </option>
           ))}
         </select>
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:end-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
 
       {filteredProducts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-16 text-center">
-          <p className="text-lg font-semibold text-gray-700">No products found</p>
+          <p className="text-lg font-semibold text-gray-700">{adminLabels.products.noProducts}</p>
           <p className="mt-1 text-sm text-gray-500">
-            Try a different search term or category filter.
+            {adminLabels.products.noProductsHint}
           </p>
         </div>
       ) : (
@@ -268,14 +272,14 @@ export default function AdminProducts() {
                         : "bg-gray-300 text-gray-600"
                     }`}
                   >
-                    {product.active ? "Active" : "Hidden"}
+                    {product.active ? adminLabels.active : adminLabels.hidden}
                   </button>
                 </div>
               </div>
 
               <div className="p-4">
                 <p className="text-xs font-semibold uppercase tracking-wider text-amber-600">
-                  {product.category}
+                  {categoryLabel(product.category)}
                 </p>
                 <h3 className="mt-1 font-bold text-gray-900">{product.name_en}</h3>
                 <p className="text-xs text-gray-500">{product.name_ar}</p>
@@ -283,8 +287,8 @@ export default function AdminProducts() {
                   {product.kind === "standard"
                     ? `${product.price.toLocaleString()} EGP`
                     : product.kind === "custom"
-                      ? "Custom pricing"
-                      : "Coming soon"}
+                      ? adminLabels.products.customPricing
+                      : adminLabels.products.comingSoon}
                 </p>
                 <div className="mt-3 flex gap-2">
                   <button
@@ -295,14 +299,14 @@ export default function AdminProducts() {
                     }}
                     className="flex-1 rounded-xl bg-amber-500 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
                   >
-                    Edit
+                    {adminLabels.edit}
                   </button>
                   <button
                     type="button"
                     onClick={() => void deleteProduct(product.id)}
                     className="rounded-xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                   >
-                    Delete
+                    {adminLabels.delete}
                   </button>
                 </div>
               </div>
@@ -323,7 +327,7 @@ export default function AdminProducts() {
           <div className="relative z-10 max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-2xl sm:max-w-3xl sm:rounded-2xl">
             <div className="sticky top-0 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-4 sm:px-6">
               <h3 className="text-lg font-bold text-gray-900">
-                {isCreating ? "Add Product" : "Edit Product"}
+                {isCreating ? adminLabels.products.addProduct : adminLabels.products.editProduct}
               </h3>
               <button
                 type="button"
@@ -332,6 +336,7 @@ export default function AdminProducts() {
                   setIsCreating(false);
                 }}
                 className="text-gray-400 hover:text-gray-600"
+                aria-label={adminLabels.close}
               >
                 ✕
               </button>
@@ -346,7 +351,7 @@ export default function AdminProducts() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Name (Arabic)
+                    {adminLabels.fields.nameArabic}
                   </label>
                   <input
                     type="text"
@@ -360,7 +365,7 @@ export default function AdminProducts() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Name (English)
+                    {adminLabels.fields.nameEnglish}
                   </label>
                   <input
                     type="text"
@@ -376,7 +381,7 @@ export default function AdminProducts() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Description (Arabic)
+                    {adminLabels.fields.descriptionArabic}
                   </label>
                   <textarea
                     rows={3}
@@ -390,7 +395,7 @@ export default function AdminProducts() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Description (English)
+                    {adminLabels.fields.descriptionEnglish}
                   </label>
                   <textarea
                     rows={3}
@@ -406,7 +411,7 @@ export default function AdminProducts() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Price
+                    {adminLabels.price}
                   </label>
                   <input
                     type="number"
@@ -420,7 +425,7 @@ export default function AdminProducts() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Category
+                    {adminLabels.category}
                   </label>
                   <select
                     value={editing.category}
@@ -434,14 +439,14 @@ export default function AdminProducts() {
                   >
                     {CATEGORY_OPTIONS.map((category) => (
                       <option key={category} value={category}>
-                        {category}
+                        {categoryLabel(category)}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Unit
+                    {adminLabels.unit}
                   </label>
                   <select
                     value={editing.unit}
@@ -453,13 +458,13 @@ export default function AdminProducts() {
                     }
                     className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400"
                   >
-                    <option value="fixed">Fixed price</option>
-                    <option value="perGram">Per gram</option>
+                    <option value="fixed">{adminLabels.productUnit.fixed}</option>
+                    <option value="perGram">{adminLabels.productUnit.perGram}</option>
                   </select>
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Type
+                    {adminLabels.type}
                   </label>
                   <select
                     value={editing.kind}
@@ -471,9 +476,9 @@ export default function AdminProducts() {
                     }
                     className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400"
                   >
-                    <option value="standard">Standard</option>
-                    <option value="custom">Custom blend</option>
-                    <option value="announcement">Coming soon</option>
+                    <option value="standard">{adminLabels.productKind.standard}</option>
+                    <option value="custom">{adminLabels.productKind.custom}</option>
+                    <option value="announcement">{adminLabels.productKind.announcement}</option>
                   </select>
                 </div>
               </div>
@@ -481,7 +486,7 @@ export default function AdminProducts() {
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Default quantity (grams)
+                    {adminLabels.fields.defaultQuantityGrams}
                   </label>
                   <input
                     type="number"
@@ -498,7 +503,7 @@ export default function AdminProducts() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Emoji
+                    {adminLabels.emoji}
                   </label>
                   <input
                     type="text"
@@ -511,7 +516,7 @@ export default function AdminProducts() {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700">
-                    Sort order
+                    {adminLabels.sortOrder}
                   </label>
                   <input
                     type="number"
@@ -537,7 +542,7 @@ export default function AdminProducts() {
                   }
                   className="size-4 rounded accent-amber-500"
                 />
-                Product is visible on website
+                {adminLabels.products.visibleOnWebsite}
               </label>
 
               <div className="flex gap-3 pt-2">
@@ -549,7 +554,7 @@ export default function AdminProducts() {
                   }}
                   className="flex-1 rounded-xl border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
                 >
-                  Cancel
+                  {adminLabels.cancel}
                 </button>
                 <button
                   type="button"
@@ -557,7 +562,7 @@ export default function AdminProducts() {
                   disabled={saving}
                   className="flex-1 rounded-xl bg-amber-500 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
                 >
-                  {saving ? "Saving..." : "Save Product"}
+                  {saving ? adminLabels.saving : adminLabels.products.saveProduct}
                 </button>
               </div>
             </div>

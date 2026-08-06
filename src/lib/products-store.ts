@@ -16,6 +16,7 @@ type ProductRow = {
   kind: string;
   image_url: string;
   active: boolean;
+  on_offer: boolean;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -36,6 +37,7 @@ function rowToProduct(row: ProductRow): CatalogProduct {
     kind: row.kind as CatalogProduct["kind"],
     image_url: row.image_url,
     active: row.active,
+    on_offer: row.on_offer ?? false,
     sort_order: row.sort_order,
     created_at: row.created_at,
     updated_at: row.updated_at,
@@ -64,6 +66,7 @@ function productToRow(
     kind: product.kind,
     image_url: product.image_url,
     active: product.active,
+    on_offer: product.on_offer,
     sort_order: product.sort_order,
     created_at: product.created_at ?? now,
     updated_at: product.updated_at ?? now,
@@ -89,6 +92,7 @@ function patchToRow(
   if (patch.kind !== undefined) row.kind = patch.kind;
   if (patch.image_url !== undefined) row.image_url = patch.image_url;
   if (patch.active !== undefined) row.active = patch.active;
+  if (patch.on_offer !== undefined) row.on_offer = patch.on_offer;
   if (patch.sort_order !== undefined) row.sort_order = patch.sort_order;
   if (patch.updated_at !== undefined) row.updated_at = patch.updated_at;
 

@@ -7,6 +7,7 @@ import { setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
+import FloatingActions from "@/components/layout/floating-actions";
 import { CartProvider } from "@/context/cart-context";
 import { ProductsProvider } from "@/context/products-context";
 import { readProducts } from "@/lib/products-store";
@@ -69,6 +70,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <Navbar />
                 <main className="flex-1">{children}</main>
                 <Footer locale={locale} />
+                <FloatingActions />
               </div>
             </CartProvider>
           </ProductsProvider>

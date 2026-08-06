@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
+import { adminLabels } from "@/lib/admin-labels";
 import type { AboutPageContent } from "@/lib/types";
 
 type FieldGroup = {
@@ -19,20 +20,20 @@ type FieldGroup = {
 const FIELD_GROUPS: FieldGroup[] = [
   {
     id: "header",
-    label: "Page Header",
+    label: adminLabels.about.groups.header,
     icon: "📄",
     fields: [
-      { key: "title_ar", label: "Page title (Arabic)", bilingual: true },
-      { key: "title_en", label: "Page title (English)", bilingual: true },
+      { key: "title_ar", label: adminLabels.fields.pageTitleArabic, bilingual: true },
+      { key: "title_en", label: adminLabels.fields.pageTitleEnglish, bilingual: true },
       {
         key: "description_ar",
-        label: "Page description (Arabic)",
+        label: adminLabels.fields.pageDescriptionArabic,
         type: "textarea",
         bilingual: true,
       },
       {
         key: "description_en",
-        label: "Page description (English)",
+        label: adminLabels.fields.pageDescriptionEnglish,
         type: "textarea",
         bilingual: true,
       },
@@ -40,66 +41,66 @@ const FIELD_GROUPS: FieldGroup[] = [
   },
   {
     id: "story",
-    label: "Story Section",
+    label: adminLabels.about.groups.story,
     icon: "📖",
     fields: [
-      { key: "story_title_ar", label: "Story title (Arabic)", bilingual: true },
-      { key: "story_title_en", label: "Story title (English)", bilingual: true },
-      { key: "story_p1_ar", label: "Story paragraph 1 (Arabic)", type: "textarea", bilingual: true },
-      { key: "story_p1_en", label: "Story paragraph 1 (English)", type: "textarea", bilingual: true },
-      { key: "story_p2_ar", label: "Story paragraph 2 (Arabic)", type: "textarea", bilingual: true },
-      { key: "story_p2_en", label: "Story paragraph 2 (English)", type: "textarea", bilingual: true },
-      { key: "story_emoji", label: "Story emoji (shown if no image)", type: "emoji" },
+      { key: "story_title_ar", label: adminLabels.about.storyTitleArabic, bilingual: true },
+      { key: "story_title_en", label: adminLabels.about.storyTitleEnglish, bilingual: true },
+      { key: "story_p1_ar", label: adminLabels.about.storyP1Arabic, type: "textarea", bilingual: true },
+      { key: "story_p1_en", label: adminLabels.about.storyP1English, type: "textarea", bilingual: true },
+      { key: "story_p2_ar", label: adminLabels.about.storyP2Arabic, type: "textarea", bilingual: true },
+      { key: "story_p2_en", label: adminLabels.about.storyP2English, type: "textarea", bilingual: true },
+      { key: "story_emoji", label: adminLabels.about.storyEmojiHint, type: "emoji" },
     ],
   },
   {
     id: "values",
-    label: "Values Section",
+    label: adminLabels.about.groups.values,
     icon: "💎",
     fields: [
-      { key: "values_title_ar", label: "Values title (Arabic)", bilingual: true },
-      { key: "values_title_en", label: "Values title (English)", bilingual: true },
-      { key: "value1_icon", label: "Value 1 icon", type: "emoji" },
-      { key: "value1_title_ar", label: "Value 1 title (Arabic)", bilingual: true },
-      { key: "value1_title_en", label: "Value 1 title (English)", bilingual: true },
-      { key: "value1_text_ar", label: "Value 1 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "value1_text_en", label: "Value 1 text (English)", type: "textarea", bilingual: true },
-      { key: "value2_icon", label: "Value 2 icon", type: "emoji" },
-      { key: "value2_title_ar", label: "Value 2 title (Arabic)", bilingual: true },
-      { key: "value2_title_en", label: "Value 2 title (English)", bilingual: true },
-      { key: "value2_text_ar", label: "Value 2 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "value2_text_en", label: "Value 2 text (English)", type: "textarea", bilingual: true },
-      { key: "value3_icon", label: "Value 3 icon", type: "emoji" },
-      { key: "value3_title_ar", label: "Value 3 title (Arabic)", bilingual: true },
-      { key: "value3_title_en", label: "Value 3 title (English)", bilingual: true },
-      { key: "value3_text_ar", label: "Value 3 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "value3_text_en", label: "Value 3 text (English)", type: "textarea", bilingual: true },
-      { key: "value4_icon", label: "Value 4 icon", type: "emoji" },
-      { key: "value4_title_ar", label: "Value 4 title (Arabic)", bilingual: true },
-      { key: "value4_title_en", label: "Value 4 title (English)", bilingual: true },
-      { key: "value4_text_ar", label: "Value 4 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "value4_text_en", label: "Value 4 text (English)", type: "textarea", bilingual: true },
+      { key: "values_title_ar", label: adminLabels.about.valuesTitleArabic, bilingual: true },
+      { key: "values_title_en", label: adminLabels.about.valuesTitleEnglish, bilingual: true },
+      { key: "value1_icon", label: adminLabels.about.valueIcon.replace("{n}", "1"), type: "emoji" },
+      { key: "value1_title_ar", label: adminLabels.about.valueTitleArabic.replace("{n}", "1"), bilingual: true },
+      { key: "value1_title_en", label: adminLabels.about.valueTitleEnglish.replace("{n}", "1"), bilingual: true },
+      { key: "value1_text_ar", label: adminLabels.about.valueTextArabic.replace("{n}", "1"), type: "textarea", bilingual: true },
+      { key: "value1_text_en", label: adminLabels.about.valueTextEnglish.replace("{n}", "1"), type: "textarea", bilingual: true },
+      { key: "value2_icon", label: adminLabels.about.valueIcon.replace("{n}", "2"), type: "emoji" },
+      { key: "value2_title_ar", label: adminLabels.about.valueTitleArabic.replace("{n}", "2"), bilingual: true },
+      { key: "value2_title_en", label: adminLabels.about.valueTitleEnglish.replace("{n}", "2"), bilingual: true },
+      { key: "value2_text_ar", label: adminLabels.about.valueTextArabic.replace("{n}", "2"), type: "textarea", bilingual: true },
+      { key: "value2_text_en", label: adminLabels.about.valueTextEnglish.replace("{n}", "2"), type: "textarea", bilingual: true },
+      { key: "value3_icon", label: adminLabels.about.valueIcon.replace("{n}", "3"), type: "emoji" },
+      { key: "value3_title_ar", label: adminLabels.about.valueTitleArabic.replace("{n}", "3"), bilingual: true },
+      { key: "value3_title_en", label: adminLabels.about.valueTitleEnglish.replace("{n}", "3"), bilingual: true },
+      { key: "value3_text_ar", label: adminLabels.about.valueTextArabic.replace("{n}", "3"), type: "textarea", bilingual: true },
+      { key: "value3_text_en", label: adminLabels.about.valueTextEnglish.replace("{n}", "3"), type: "textarea", bilingual: true },
+      { key: "value4_icon", label: adminLabels.about.valueIcon.replace("{n}", "4"), type: "emoji" },
+      { key: "value4_title_ar", label: adminLabels.about.valueTitleArabic.replace("{n}", "4"), bilingual: true },
+      { key: "value4_title_en", label: adminLabels.about.valueTitleEnglish.replace("{n}", "4"), bilingual: true },
+      { key: "value4_text_ar", label: adminLabels.about.valueTextArabic.replace("{n}", "4"), type: "textarea", bilingual: true },
+      { key: "value4_text_en", label: adminLabels.about.valueTextEnglish.replace("{n}", "4"), type: "textarea", bilingual: true },
     ],
   },
   {
     id: "process",
-    label: "Process Section",
+    label: adminLabels.about.groups.process,
     icon: "⚙️",
     fields: [
-      { key: "process_title_ar", label: "Process title (Arabic)", bilingual: true },
-      { key: "process_title_en", label: "Process title (English)", bilingual: true },
-      { key: "step1_title_ar", label: "Step 1 title (Arabic)", bilingual: true },
-      { key: "step1_title_en", label: "Step 1 title (English)", bilingual: true },
-      { key: "step1_text_ar", label: "Step 1 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "step1_text_en", label: "Step 1 text (English)", type: "textarea", bilingual: true },
-      { key: "step2_title_ar", label: "Step 2 title (Arabic)", bilingual: true },
-      { key: "step2_title_en", label: "Step 2 title (English)", bilingual: true },
-      { key: "step2_text_ar", label: "Step 2 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "step2_text_en", label: "Step 2 text (English)", type: "textarea", bilingual: true },
-      { key: "step3_title_ar", label: "Step 3 title (Arabic)", bilingual: true },
-      { key: "step3_title_en", label: "Step 3 title (English)", bilingual: true },
-      { key: "step3_text_ar", label: "Step 3 text (Arabic)", type: "textarea", bilingual: true },
-      { key: "step3_text_en", label: "Step 3 text (English)", type: "textarea", bilingual: true },
+      { key: "process_title_ar", label: adminLabels.about.processTitleArabic, bilingual: true },
+      { key: "process_title_en", label: adminLabels.about.processTitleEnglish, bilingual: true },
+      { key: "step1_title_ar", label: adminLabels.about.stepTitleArabic.replace("{n}", "1"), bilingual: true },
+      { key: "step1_title_en", label: adminLabels.about.stepTitleEnglish.replace("{n}", "1"), bilingual: true },
+      { key: "step1_text_ar", label: adminLabels.about.stepTextArabic.replace("{n}", "1"), type: "textarea", bilingual: true },
+      { key: "step1_text_en", label: adminLabels.about.stepTextEnglish.replace("{n}", "1"), type: "textarea", bilingual: true },
+      { key: "step2_title_ar", label: adminLabels.about.stepTitleArabic.replace("{n}", "2"), bilingual: true },
+      { key: "step2_title_en", label: adminLabels.about.stepTitleEnglish.replace("{n}", "2"), bilingual: true },
+      { key: "step2_text_ar", label: adminLabels.about.stepTextArabic.replace("{n}", "2"), type: "textarea", bilingual: true },
+      { key: "step2_text_en", label: adminLabels.about.stepTextEnglish.replace("{n}", "2"), type: "textarea", bilingual: true },
+      { key: "step3_title_ar", label: adminLabels.about.stepTitleArabic.replace("{n}", "3"), bilingual: true },
+      { key: "step3_title_en", label: adminLabels.about.stepTitleEnglish.replace("{n}", "3"), bilingual: true },
+      { key: "step3_text_ar", label: adminLabels.about.stepTextArabic.replace("{n}", "3"), type: "textarea", bilingual: true },
+      { key: "step3_text_en", label: adminLabels.about.stepTextEnglish.replace("{n}", "3"), type: "textarea", bilingual: true },
     ],
   },
 ];
@@ -154,35 +155,35 @@ export default function AdminAbout() {
       });
 
       if (!response.ok) {
-        showToast("Error saving about page");
+        showToast(adminLabels.about.errorSaving);
         return;
       }
 
       const payload = (await response.json()) as { content?: AboutPageContent };
       setContent(payload.content ?? content);
-      showToast("About page saved!");
+      showToast(adminLabels.about.saved);
     } catch {
-      showToast("Error saving about page");
+      showToast(adminLabels.about.errorSaving);
     } finally {
       setSaving(false);
     }
   }
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Loading about page...</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.about.loading}</div>;
   }
 
   if (!content) {
-    return <div className="py-12 text-center text-gray-400">Failed to load about page.</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.about.loadFailed}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">About Page</h2>
+          <h2 className="text-xl font-bold text-gray-900">{adminLabels.about.title}</h2>
           <p className="text-sm text-gray-500">
-            Edit every element on the About Us page in Arabic and English.
+            {adminLabels.about.subtitle}
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -192,7 +193,7 @@ export default function AdminAbout() {
             rel="noreferrer"
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-center text-sm font-semibold text-gray-600 transition hover:bg-gray-50 sm:w-auto"
           >
-            Preview page
+            {adminLabels.about.previewPage}
           </a>
           <button
             type="button"
@@ -200,13 +201,13 @@ export default function AdminAbout() {
             disabled={saving}
             className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
           >
-            {saving ? "Saving..." : "Save About Page"}
+            {saving ? adminLabels.saving : adminLabels.about.saveAbout}
           </button>
         </div>
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:end-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
@@ -215,17 +216,17 @@ export default function AdminAbout() {
         <div className="border-b border-gray-100 bg-gray-50 px-5 py-3">
           <div className="flex items-center gap-2">
             <span>🖼️</span>
-            <h3 className="text-sm font-semibold text-gray-700">Story image</h3>
+            <h3 className="text-sm font-semibold text-gray-700">{adminLabels.about.storyImage}</h3>
           </div>
         </div>
         <div className="p-5">
           <ImagePicker
-            label="Story section image"
+            label={adminLabels.about.storySectionImage}
             value={content.story_image_url}
             onChange={(story_image_url) => updateField("story_image_url", story_image_url)}
           />
           <p className="mt-2 text-xs text-gray-500">
-            If empty, the emoji below will be shown instead.
+            {adminLabels.about.storyImageHint}
           </p>
         </div>
       </div>

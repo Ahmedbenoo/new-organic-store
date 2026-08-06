@@ -32,6 +32,7 @@ export type CatalogProduct = {
   kind: ProductKind;
   image_url: string;
   active: boolean;
+  on_offer: boolean;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -57,6 +58,24 @@ export type Order = {
   created_at: string;
 };
 
+export type PartnershipInquiryStatus =
+  | "new"
+  | "reviewed"
+  | "contacted"
+  | "closed";
+
+export type PartnershipInquiry = {
+  id: string;
+  company_name: string;
+  company_field: string;
+  phone: string;
+  address: string;
+  inquiry_subject: string;
+  inquiry_details: string;
+  status: PartnershipInquiryStatus;
+  created_at: string;
+};
+
 export type SiteSettings = Record<string, string>;
 
 export type HeroSlide = {
@@ -65,6 +84,22 @@ export type HeroSlide = {
   label_en: string;
   label_ar: string;
   product_id?: string;
+  active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ShopOffer = {
+  id: string;
+  title_ar: string;
+  title_en: string;
+  description_ar: string;
+  description_en: string;
+  image_url: string;
+  product_id?: string;
+  badge_ar: string;
+  badge_en: string;
   active: boolean;
   sort_order: number;
   created_at: string;

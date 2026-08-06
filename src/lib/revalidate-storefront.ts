@@ -40,6 +40,12 @@ export function revalidateSliderPages() {
   });
 }
 
+export function revalidateOffersPages() {
+  forEachLocale((locale) => {
+    revalidatePath(localizedPath(locale, "shop"));
+  });
+}
+
 export function revalidateAboutPages() {
   forEachLocale((locale) => {
     revalidatePath(localizedPath(locale, "about"));

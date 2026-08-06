@@ -57,6 +57,7 @@ export async function POST(request: Request) {
       kind: body.kind ?? "standard",
       image_url: body.image_url ?? "/assets/img1.jpeg",
       active: body.active ?? true,
+      on_offer: body.on_offer ?? false,
       sort_order: body.sort_order ?? 999,
     });
 

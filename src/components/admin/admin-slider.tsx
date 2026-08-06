@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ImagePicker from "@/components/admin/image-picker";
+import { adminLabels } from "@/lib/admin-labels";
 import type { HeroSlide } from "@/lib/types";
 
 function createEmptySlide(sortOrder: number): HeroSlide {
@@ -12,7 +13,7 @@ function createEmptySlide(sortOrder: number): HeroSlide {
     id: crypto.randomUUID(),
     image_url: "/assets/img1.jpeg",
     label_en: "New slide",
-    label_ar: "شريحة جديدة",
+    label_ar: adminLabels.slider.newSlide,
     active: true,
     sort_order: sortOrder,
     created_at: now,
@@ -87,7 +88,7 @@ export default function AdminSlider() {
   }
 
   function removeSlide(id: string) {
-    if (!window.confirm("Delete this slide?")) return;
+    if (!window.confirm(adminLabels.slider.deleteConfirm)) return;
 
     setSlides((prev) =>
       prev
@@ -108,31 +109,31 @@ export default function AdminSlider() {
       });
 
       if (!response.ok) {
-        showToast("Error saving slider");
+        showToast(adminLabels.slider.errorSaving);
         return;
       }
 
       const payload = (await response.json()) as { slides?: HeroSlide[] };
       setSlides(payload.slides ?? slides);
-      showToast("Slider saved!");
+      showToast(adminLabels.slider.saved);
     } catch {
-      showToast("Error saving slider");
+      showToast(adminLabels.slider.errorSaving);
     } finally {
       setSaving(false);
     }
   }
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Loading slider...</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.slider.loading}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Hero Slider</h2>
+          <h2 className="text-xl font-bold text-gray-900">{adminLabels.slider.title}</h2>
           <p className="text-sm text-gray-500">
-            Control the homepage slider images and their order.
+            {adminLabels.slider.subtitle}
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -141,7 +142,7 @@ export default function AdminSlider() {
             onClick={addSlide}
             className="w-full rounded-xl border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 sm:w-auto"
           >
-            + Add Slide
+            {adminLabels.slider.addSlide}
           </button>
           <button
             type="button"
@@ -149,26 +150,26 @@ export default function AdminSlider() {
             disabled={saving}
             className="w-full rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
           >
-            {saving ? "Saving..." : "Save Slider"}
+            {saving ? adminLabels.saving : adminLabels.slider.saveSlider}
           </button>
         </div>
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:end-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
 
       {slides.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-16 text-center">
-          <p className="text-lg font-semibold text-gray-700">No slides yet</p>
+          <p className="text-lg font-semibold text-gray-700">{adminLabels.slider.noSlides}</p>
           <button
             type="button"
             onClick={addSlide}
             className="mt-4 rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white"
           >
-            Add first slide
+            {adminLabels.slider.addFirstSlide}
           </button>
         </div>
       ) : (
@@ -211,14 +212,14 @@ export default function AdminSlider() {
                             : "bg-gray-300 text-gray-600"
                         }`}
                       >
-                        {slide.active ? "Visible" : "Hidden"}
+                        {slide.active ? adminLabels.visible : adminLabels.hidden}
                       </button>
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Label (English)
+                          {adminLabels.fields.labelEnglish}
                         </label>
                         <input
                           type="text"
@@ -231,7 +232,7 @@ export default function AdminSlider() {
                       </div>
                       <div>
                         <label className="mb-1 block text-xs font-medium text-gray-600">
-                          Label (Arabic)
+                          {adminLabels.fields.labelArabic}
                         </label>
                         <input
                           type="text"
@@ -254,7 +255,7 @@ export default function AdminSlider() {
                         disabled={index === 0}
                         className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 disabled:opacity-40"
                       >
-                        Move up
+                        {adminLabels.moveUp}
                       </button>
                       <button
                         type="button"
@@ -262,7 +263,7 @@ export default function AdminSlider() {
                         disabled={index === slides.length - 1}
                         className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 disabled:opacity-40"
                       >
-                        Move down
+                        {adminLabels.moveDown}
                       </button>
                       <button
                         type="button"
@@ -271,20 +272,20 @@ export default function AdminSlider() {
                         }
                         className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white"
                       >
-                        {isEditing ? "Close image picker" : "Change image"}
+                        {isEditing ? adminLabels.closeImagePicker : adminLabels.changeImage}
                       </button>
                       <button
                         type="button"
                         onClick={() => removeSlide(slide.id)}
                         className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600"
                       >
-                        Delete
+                        {adminLabels.delete}
                       </button>
                     </div>
 
                     {isEditing ? (
                       <ImagePicker
-                        label="Slider image"
+                        label={adminLabels.slider.sliderImage}
                         value={slide.image_url}
                         onChange={(image_url) =>
                           updateSlide(slide.id, { image_url })

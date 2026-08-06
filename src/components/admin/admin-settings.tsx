@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { adminLabels } from "@/lib/admin-labels";
 
 const SETTING_GROUPS: {
   category: string;
@@ -10,13 +11,13 @@ const SETTING_GROUPS: {
 }[] = [
   {
     category: "contact",
-    label: "WhatsApp & Contact",
+    label: adminLabels.settings.groups.contact,
     icon: "📱",
     keys: ["whatsapp_owner", "whatsapp_branch"],
   },
   {
     category: "hero",
-    label: "Hero Section",
+    label: adminLabels.settings.groups.hero,
     icon: "🌟",
     keys: [
       "hero_badge_en",
@@ -29,7 +30,7 @@ const SETTING_GROUPS: {
   },
   {
     category: "footer",
-    label: "Footer",
+    label: adminLabels.settings.groups.footer,
     icon: "📄",
     keys: [
       "footer_email",
@@ -40,26 +41,26 @@ const SETTING_GROUPS: {
   },
   {
     category: "admin",
-    label: "Admin Password",
+    label: adminLabels.settings.groups.admin,
     icon: "🔒",
     keys: ["admin_password"],
   },
 ];
 
 const SETTING_LABELS: Record<string, string> = {
-  whatsapp_owner: "Owner WhatsApp Number (e.g. 201092313486)",
-  whatsapp_branch: "Branch WhatsApp Number (e.g. 201092313486)",
-  hero_badge_en: "Hero Badge (English)",
-  hero_badge_ar: "Hero Badge (Arabic)",
-  hero_title_en: "Hero Title (English)",
-  hero_title_ar: "Hero Title (Arabic)",
-  hero_description_en: "Hero Description (English)",
-  hero_description_ar: "Hero Description (Arabic)",
-  footer_email: "Footer Email",
-  footer_phone: "Footer Phone",
-  footer_address_en: "Footer Address (English)",
-  footer_address_ar: "Footer Address (Arabic)",
-  admin_password: "New Admin Password (leave blank to keep current)",
+  whatsapp_owner: adminLabels.settings.whatsappOwner,
+  whatsapp_branch: adminLabels.settings.whatsappBranch,
+  hero_badge_en: adminLabels.settings.heroBadgeEnglish,
+  hero_badge_ar: adminLabels.settings.heroBadgeArabic,
+  hero_title_en: adminLabels.settings.heroTitleEnglish,
+  hero_title_ar: adminLabels.settings.heroTitleArabic,
+  hero_description_en: adminLabels.settings.heroDescriptionEnglish,
+  hero_description_ar: adminLabels.settings.heroDescriptionArabic,
+  footer_email: adminLabels.settings.footerEmail,
+  footer_phone: adminLabels.settings.footerPhone,
+  footer_address_en: adminLabels.settings.footerAddressEnglish,
+  footer_address_ar: adminLabels.settings.footerAddressArabic,
+  admin_password: adminLabels.settings.adminPassword,
 };
 
 export default function AdminSettings() {
@@ -114,7 +115,7 @@ export default function AdminSettings() {
       });
 
       if (!response.ok) {
-        showToast("Error saving settings");
+        showToast(adminLabels.settings.errorSaving);
         return;
       }
 
@@ -123,34 +124,34 @@ export default function AdminSettings() {
         delete next.admin_password;
         return next;
       });
-      showToast("Settings saved!");
+      showToast(adminLabels.settings.saved);
     } catch {
-      showToast("Error saving settings");
+      showToast(adminLabels.settings.errorSaving);
     } finally {
       setSaving(false);
     }
   }
 
   if (loading) {
-    return <div className="py-12 text-center text-gray-400">Loading settings...</div>;
+    return <div className="py-12 text-center text-gray-400">{adminLabels.settings.loading}</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-xl font-bold text-gray-900">Site Settings</h2>
+        <h2 className="text-xl font-bold text-gray-900">{adminLabels.settings.title}</h2>
         <button
           type="button"
           onClick={saveAll}
           disabled={saving}
           className="w-full rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60 sm:w-auto"
         >
-          {saving ? "Saving..." : "Save All Changes"}
+          {saving ? adminLabels.saving : adminLabels.settings.saveAll}
         </button>
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:right-6 sm:bottom-6 sm:mx-0 sm:text-start">
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl bg-green-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg sm:inset-x-auto sm:end-6 sm:bottom-6 sm:mx-0 sm:text-start">
           {toast}
         </div>
       ) : null}
@@ -196,7 +197,7 @@ export default function AdminSettings() {
                         value={settings[key] ?? ""}
                         placeholder={
                           key === "admin_password"
-                            ? "Leave blank to keep current password"
+                            ? adminLabels.settings.passwordPlaceholder
                             : undefined
                         }
                         autoComplete={
@@ -220,10 +221,9 @@ export default function AdminSettings() {
       </div>
 
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
-        <h3 className="font-semibold text-amber-800">What you can control here</h3>
+        <h3 className="font-semibold text-amber-800">{adminLabels.settings.infoTitle}</h3>
         <p className="mt-2 text-sm text-amber-700">
-          WhatsApp numbers, homepage hero text, footer contact details, and admin
-          password. Changes apply to the live website immediately after saving.
+          {adminLabels.settings.infoText}
         </p>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { adminLabels } from "@/lib/admin-labels";
 
 type ImagePickerProps = {
   value: string;
@@ -12,7 +13,7 @@ type ImagePickerProps = {
 export default function ImagePicker({
   value,
   onChange,
-  label = "Image",
+  label = adminLabels.imagePicker.defaultLabel,
 }: ImagePickerProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<string[]>([]);
@@ -65,7 +66,7 @@ export default function ImagePicker({
       const payload = (await response.json()) as { url?: string; error?: string };
 
       if (!response.ok || !payload.url) {
-        window.alert(payload.error ?? "Failed to upload image");
+        window.alert(payload.error ?? adminLabels.imagePicker.uploadFailed);
         return;
       }
 
@@ -74,7 +75,7 @@ export default function ImagePicker({
       );
       onChange(payload.url);
     } catch {
-      window.alert("Failed to upload image");
+      window.alert(adminLabels.imagePicker.uploadFailed);
     } finally {
       setUploading(false);
     }
@@ -90,7 +91,7 @@ export default function ImagePicker({
           {value ? (
             <Image
               src={value}
-              alt="Selected image"
+              alt={adminLabels.imagePicker.selectedImage}
               fill
               unoptimized
               className="object-cover"
@@ -98,7 +99,7 @@ export default function ImagePicker({
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-gray-400">
-              No image selected
+              {adminLabels.imagePicker.noImageSelected}
             </div>
           )}
         </div>
@@ -106,7 +107,7 @@ export default function ImagePicker({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-gray-700">
-          Image URL
+          {adminLabels.imagePicker.imageUrl}
         </label>
         <input
           type="text"
@@ -135,21 +136,21 @@ export default function ImagePicker({
           disabled={uploading}
           className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
         >
-          {uploading ? "Uploading..." : "Upload new image"}
+          {uploading ? adminLabels.imagePicker.uploading : adminLabels.imagePicker.uploadNew}
         </button>
         <input
           type="search"
           value={pickerSearch}
           onChange={(event) => setPickerSearch(event.target.value)}
-          placeholder="Search gallery..."
+          placeholder={adminLabels.imagePicker.searchGallery}
           className="min-w-0 flex-1 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-amber-400"
         />
       </div>
 
       {loadingImages ? (
-        <p className="text-sm text-gray-500">Loading gallery...</p>
+        <p className="text-sm text-gray-500">{adminLabels.imagePicker.loadingGallery}</p>
       ) : filteredImages.length === 0 ? (
-        <p className="text-sm text-gray-500">No images found.</p>
+        <p className="text-sm text-gray-500">{adminLabels.imagePicker.noImagesFound}</p>
       ) : (
         <div className="grid max-h-56 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-5 md:grid-cols-6">
           {filteredImages.map((image) => {

@@ -29,7 +29,26 @@
     "currency": "EGP",
     "addToCart": "Add to Cart",
     "readMore": "Read more",
-    "minRead": "{minutes} min read"
+    "minRead": "{minutes} min read",
+    "whatsappFloatLabel": "Contact us on WhatsApp",
+    "offersFloatLabel": "Offers",
+    "partnershipFloatLabel": "Partner with us"
+  },
+  "PartnershipForm": {
+    "title": "Partner with us",
+    "description": "Fill in your company details and we will contact you soon.",
+    "companyName": "Company name",
+    "companyField": "Company field",
+    "phone": "Phone number",
+    "address": "Company address",
+    "inquirySubject": "What is your inquiry about?",
+    "inquiryDetails": "Inquiry details",
+    "submit": "Send request",
+    "submitting": "Sending...",
+    "submitError": "Could not send your request. Please try again.",
+    "successTitle": "Request sent successfully",
+    "successMessage": "Thank you! We received your partnership request and will contact you soon.",
+    "close": "Close"
   },
   "Search": {
     "title": "Search products",
@@ -170,6 +189,7 @@
     "description": "Browse natural honey, Sidr, bee products, custom blends, and dates.",
     "filters": {
       "all": "All",
+      "offers": "Current Offers",
       "natural-honey": "Natural Honey",
       "sidr": "Sidr Honey",
       "bee-products": "Bee Products",
@@ -184,10 +204,14 @@
     "next": "Next",
     "loading": "Loading products...",
     "emptyCategory": "No products in this category yet.",
+    "emptyOffers": "No current offers at the moment. Check back soon!",
+    "offersTitle": "Current Offers",
+    "offersDescription": "Special deals and limited-time offers on selected products.",
     "showingResults": "Showing {from}–{to} of {total} products — page {page} of {pages}"
   },
   "Products": {
     "comingSoon": "Coming Soon",
+    "onOffer": "Offer",
     "customPrice": "Custom pricing",
     "requestBlend": "Request blend",
     "notifyMe": "Contact us",
